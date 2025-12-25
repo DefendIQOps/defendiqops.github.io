@@ -1,242 +1,220 @@
 <!doctype html>
-<html lang="en" data-lang="en">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#061018" />
-  <title>DefendIQOps — Practical Defensive Cybersecurity Tools</title>
-  <meta name="description" content="DefendIQOps builds practical, defensive-first cybersecurity tools with safe defaults, clear docs, and reproducible outputs." />
+  <title>DefendIQOps</title>
+  <meta name="description" content="Defensive-first security utilities & services. Validate posture, monitor changes, and ship safer systems — no offensive actions." />
 
-  <!-- Performance -->
-  <link rel="preload" as="image" href="assets/img/logo.png" />
-  <link rel="preload" as="image" href="assets/img/logo2.png" />
+  <link rel="preload" as="image" href="assets/img/logo.png">
+  <link rel="preload" as="image" href="assets/img/logo2.png">
 
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
-  <a class="skip" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#top" aria-label="DefendIQOps Home">
-        <img class="brand-logo" src="assets/img/logo.png" alt="DefendIQOps logo" width="40" height="40" />
-        <span class="brand-name">DefendIQOps</span>
+  <header class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="#">
+        <span class="brand__dot" aria-hidden="true"></span>
+        <span class="brand__name">DefendIQOps</span>
       </a>
 
-      <nav class="nav" aria-label="Primary navigation">
-        <a class="nav-link" href="#tools">Tools</a>
-        <a class="nav-link" href="#roadmap">Roadmap</a>
-        <a class="nav-link" href="#contribute">Contribute</a>
-        <a class="nav-link nav-cta" href="#get-started">Get Started</a>
+      <button class="navbtn" id="navBtn" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="nav">
+        <a href="#services">Services</a>
+        <a href="#toolkit">Toolkit</a>
+        <a href="#why">Why Us</a>
+        <a class="btn btn--sm" href="#contact">Get a Quote</a>
       </nav>
     </div>
   </header>
 
   <main id="main">
     <!-- HERO -->
-    <section class="hero" id="top">
-      <div class="container hero-grid">
-        <div class="hero-copy">
+    <section class="hero">
+      <div class="container hero__grid">
+        <div class="hero__copy">
           <p class="pill">Defensive-first • Authorized use only</p>
-
-          <h1 class="hero-title">
-            Practical security tools that help you
-            <span class="glow">verify</span>, <span class="glow">monitor</span>, and <span class="glow">respond</span>.
-          </h1>
-
-          <p class="hero-sub">
-            A lightweight hub of focused scanners, analyzers, and blue-team utilities—built with safe defaults,
-            clear docs, and reproducible outputs.
+          <h1>Protect your site & workflow — fast, clean, defensive.</h1>
+          <p class="lead">
+            DefendIQOps helps you validate security posture, spot risky configurations, and ship safer systems
+            with clear reports and practical fixes.
           </p>
 
-          <div class="hero-actions" id="get-started">
-            <a class="btn btn-primary" href="#tools">Explore Tools</a>
-            <a class="btn btn-ghost" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">View GitHub</a>
+          <div class="hero__cta">
+            <a class="btn" href="#contact">Request Assessment</a>
+            <a class="btn btn--ghost" href="#toolkit">View Tools</a>
           </div>
 
-          <div class="hero-trust">
-            <div class="trust-item">
-              <span class="trust-kpi">Safe</span>
-              <span class="trust-label">No exploitation</span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-kpi">Clear</span>
-              <span class="trust-label">Readable output</span>
-            </div>
-            <div class="trust-item">
-              <span class="trust-kpi">Fast</span>
-              <span class="trust-label">Minimal deps</span>
-            </div>
+          <div class="trust-row" aria-label="Trust signals">
+            <div class="trust">Fast setup</div>
+            <div class="trust">Clear reports</div>
+            <div class="trust">Defensive only</div>
           </div>
-
-          <p class="hero-note">
-            We build for blue teams: validation, hardening checks, and incident triage — nothing offensive.
-          </p>
         </div>
 
-        <div class="hero-media" aria-label="Showcase slider">
-          <div class="media-card">
-            <div class="media-top">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <span class="media-title">Showcase</span>
+        <!-- BRAND PREVIEW / SLIDER -->
+        <div class="hero__media">
+          <div class="card glass">
+            <div class="card__head">
+              <div>
+                <h2 class="card__title">Brand Preview</h2>
+                <p class="card__sub">Auto-switching between two logos</p>
+              </div>
+
+              <button class="btn btn--sm btn--ghost" id="toggleSlide" type="button">
+                Pause
+              </button>
             </div>
 
-            <!-- ✅ السلايدين فقط: لا تغيّر الاسم ولا المسار -->
-            <div class="slider">
+            <div class="slider" role="img" aria-label="DefendIQOps logo slideshow">
               <img
-                id="heroSlide"
-                class="slide-img"
+                id="slideImg"
                 src="assets/img/logo.png"
-                alt="DefendIQOps showcase"
-                width="900"
-                height="900"
+                alt="DefendIQOps logo slide"
+                width="1200"
+                height="675"
+                loading="eager"
                 decoding="async"
               />
-              <div class="slider-glow" aria-hidden="true"></div>
             </div>
 
-            <div class="media-bottom">
-              <span class="badge">Defensive</span>
-              <span class="badge">Verified</span>
-              <span class="badge">Practical</span>
+            <div class="slider__dots" aria-hidden="true">
+              <span class="dot dot--on" id="dot1"></span>
+              <span class="dot" id="dot2"></span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="bg-orbs" aria-hidden="true">
-        <span class="orb orb-1"></span>
-        <span class="orb orb-2"></span>
-        <span class="orb orb-3"></span>
+      <div class="hero__bg" aria-hidden="true"></div>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section__head">
+          <h2>Services that build trust</h2>
+          <p>People choose sites that look reliable, clear, and “safe”. So we focus on clarity, proof, and smooth UX.</p>
+        </div>
+
+        <div class="grid3">
+          <article class="tile">
+            <h3>Defensive Security Review</h3>
+            <p>Configuration checks, best-practice hardening, and risk prioritization — no offensive actions.</p>
+            <a class="tile__link" href="#contact">Ask for a review →</a>
+          </article>
+
+          <article class="tile">
+            <h3>Readable Reports</h3>
+            <p>Non-technical summary + technical appendix, so decision-makers understand what matters.</p>
+            <a class="tile__link" href="#contact">Get a sample →</a>
+          </article>
+
+          <article class="tile">
+            <h3>Practical Remediation</h3>
+            <p>Step-by-step fixes and validation, aimed at shipping improvements quickly with minimal disruption.</p>
+            <a class="tile__link" href="#contact">Plan the fixes →</a>
+          </article>
+        </div>
       </div>
     </section>
 
-    <!-- TOOLS -->
-    <section class="section" id="tools">
+    <!-- TOOLKIT -->
+    <section class="section" id="toolkit">
       <div class="container">
-        <div class="section-head">
-          <h2>Tool Categories</h2>
-          <p>Start small. Ship often. Keep it useful.</p>
+        <div class="section__head">
+          <h2>Toolkit (clean & commercial)</h2>
+          <p>Short list, clear value, and quick CTA — this converts better than long walls of text.</p>
         </div>
 
-        <div class="grid cards">
-          <article class="card">
-            <h3>Scanners & Validators</h3>
-            <p>Safe checks for common mistakes: headers, TLS posture, baseline config sanity—no exploitation.</p>
-            <ul class="list">
-              <li>HTTP header checks</li>
-              <li>TLS posture overview</li>
-              <li>Best-practice baselines</li>
-            </ul>
-            <a class="card-link" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">See repos →</a>
+        <div class="grid3">
+          <article class="tool">
+            <h3>Phishing Message Check</h3>
+            <p>Spot suspicious patterns, domain tricks, and risky links with easy-to-read scoring.</p>
+            <a class="btn btn--sm btn--ghost" href="#contact">Request demo</a>
           </article>
 
-          <article class="card">
-            <h3>Analyzers</h3>
-            <p>Turn raw data into signal: logs, URLs, hashes, artifacts—optimized for triage and clarity.</p>
-            <ul class="list">
-              <li>Log summarizers</li>
-              <li>IOC normalization</li>
-              <li>Read-only inspectors</li>
-            </ul>
-            <a class="card-link" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">See repos →</a>
+          <article class="tool">
+            <h3>Header & TLS Validation</h3>
+            <p>Quick checks for security headers, HTTPS posture, and common misconfigurations.</p>
+            <a class="btn btn--sm btn--ghost" href="#contact">Request demo</a>
           </article>
 
-          <article class="card">
-            <h3>Blue Team Utilities</h3>
-            <p>SOC/DFIR helpers that save time: templates, checklists, and workflows you can reuse.</p>
-            <ul class="list">
-              <li>Triage checklists</li>
-              <li>Report templates</li>
-              <li>Hygiene helpers</li>
-            </ul>
-            <a class="card-link" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">See repos →</a>
+          <article class="tool">
+            <h3>Asset Integrity</h3>
+            <p>Track changes in files and configs, and detect unexpected modifications early.</p>
+            <a class="btn btn--sm btn--ghost" href="#contact">Request demo</a>
           </article>
         </div>
+      </div>
+    </section>
 
-        <div class="callout">
+    <!-- WHY -->
+    <section class="section" id="why">
+      <div class="container">
+        <div class="section__head">
+          <h2>Why this style works</h2>
+          <p>Commercial sites win when value is clear in 5 seconds, buttons are obvious, and layout feels premium.</p>
+        </div>
+
+        <div class="grid2">
+          <div class="panel">
+            <h3>Decision is emotional first</h3>
+            <p>Users judge trust from spacing, contrast, clarity, and “calm UI”. Then they read details.</p>
+          </div>
+          <div class="panel">
+            <h3>One path to action</h3>
+            <p>We keep one primary CTA (Get a Quote) and repeat it intelligently to reduce drop-off.</p>
+          </div>
+        </div>
+
+        <div class="ctaBand glass">
           <div>
-            <h3>Commercial-ready structure</h3>
-            <p>
-              People trust: <strong>clear value</strong>, <strong>safe promise</strong>, and <strong>one obvious CTA</strong>.
-              هذا اللي ركزنا عليه بالهيرو والكروت والهوفر.
-            </p>
+            <h3>Want it even smoother?</h3>
+            <p>Add pricing + FAQ + a simple front-end contact form next.</p>
           </div>
-          <a class="btn btn-primary" href="#contribute">Suggest a Tool</a>
+          <a class="btn" href="#contact">Contact Now</a>
         </div>
       </div>
     </section>
 
-    <!-- ROADMAP -->
-    <section class="section" id="roadmap">
+    <!-- CONTACT -->
+    <section class="section" id="contact">
       <div class="container">
-        <div class="section-head">
-          <h2>Roadmap</h2>
-          <p>Clear steps, no fluff.</p>
+        <div class="section__head">
+          <h2>Contact</h2>
+          <p>Keep it simple: one CTA, one path. This reduces drop-off.</p>
         </div>
 
-        <div class="timeline">
-          <div class="step">
-            <div class="step-tag">Phase 1</div>
-            <h3>Launch the first tool</h3>
-            <p>One focused repo with clean README, examples, and a safe disclaimer.</p>
+        <div class="contact glass">
+          <div class="contact__row">
+            <div class="label">Email</div>
+            <div class="value"><a href="mailto:S3killer7772@gmail.com">S3killer7772@gmail.com</a></div>
           </div>
-          <div class="step">
-            <div class="step-tag">Phase 2</div>
-            <h3>Build a consistent standard</h3>
-            <p>Same structure across tools: install, usage, output, limitations, tests (where possible).</p>
+          <div class="contact__row">
+            <div class="label">Brand</div>
+            <div class="value">DefendIQOps</div>
           </div>
-          <div class="step">
-            <div class="step-tag">Phase 3</div>
-            <h3>Community-friendly growth</h3>
-            <p>Issue templates, contribution guide, and simple releases—easy for others to help.</p>
+          <div class="contact__row">
+            <div class="label">Tagline</div>
+            <div class="value">Security. Verified. Defensive.</div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTRIBUTING -->
-    <section class="section" id="contribute">
-      <div class="container">
-        <div class="section-head">
-          <h2>Contribute</h2>
-          <p>PRs are welcome — keep it clean and defensive.</p>
-        </div>
-
-        <div class="grid split">
-          <div class="panel">
-            <h3>Propose a tool idea</h3>
-            <p>Open an issue with the problem, expected input/output, and safe sample data (if needed).</p>
-            <a class="btn btn-ghost" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">Open an issue</a>
-          </div>
-
-          <div class="panel">
-            <h3>Send a PR</h3>
-            <p>Small PRs are best: one improvement, one fix, or one feature with docs.</p>
-            <a class="btn btn-ghost" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">Create a PR</a>
-          </div>
-        </div>
-
-        <div class="disclaimer">
-          <strong>Safety & Ethics:</strong> Tools are built for authorized defensive security and education only.
-          Do not use them against systems you don’t own or don’t have explicit permission to test.
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-left">
-        <span class="footer-brand">DefendIQOps</span>
-        <span class="footer-sub">Build. Verify. Defend.</span>
-      </div>
-      <div class="footer-right">
-        <a class="footer-link" href="#top">Back to top ↑</a>
-        <a class="footer-link" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">GitHub</a>
-      </div>
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="year"></span> DefendIQOps. All rights reserved. Built with a defensive-first mindset.</p>
     </div>
   </footer>
 
