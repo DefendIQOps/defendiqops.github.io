@@ -1,765 +1,366 @@
 <!doctype html>
-<html lang="en" data-lang="en" dir="ltr">
+<html lang="en" data-lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#050b14" />
+  <meta name="color-scheme" content="dark" />
   <title>DefendIQOps — Practical Defensive Cybersecurity Tools</title>
-  <meta name="description" content="DefendIQOps is a hub of practical, lightweight defensive cybersecurity tools and documentation for blue teams and security engineers." />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="DefendIQOps" />
-  <meta property="og:description" content="Practical defensive cybersecurity tools. Build. Verify. Defend." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://defendiqops.github.io/" />
-  <meta property="og:image" content="https://defendiqops.github.io/assets/img/logo2.png" />
-
-  <!-- Favicon -->
-  <link rel="icon" href="assets/img/logo.png" />
+  <meta name="description" content="Practical, defensive-first cybersecurity utilities. Build. Verify. Defend." />
 
   <style>
     :root{
-      --bg0:#050b14;
-      --bg1:#070f1f;
-      --card:rgba(255,255,255,.06);
-      --stroke:rgba(255,255,255,.12);
-      --text:#eaf0ff;
-      --muted:rgba(234,240,255,.75);
-      --muted2:rgba(234,240,255,.6);
-      --accent:#43f3d2;
-      --accent2:#5aa8ff;
-      --warn:#ffd36c;
-      --shadow: 0 18px 60px rgba(0,0,0,.45);
-      --radius:22px;
-      --radius2:28px;
-      --max:1180px;
+      /* ====== Glass theme palette (match your images easily) ====== */
+      --bg0: #070A12;
+      --bg1: #0A1022;
+
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --border: rgba(255,255,255,.12);
+
+      /* accents (change these 3 لو بدك نفس ألوان صورك حرفيًا) */
+      --a1: #55E6FF; /* cyan */
+      --a2: #8B5CFF; /* violet */
+      --a3: #22C55E; /* green */
+
+      --glass: rgba(255,255,255,.06);
+      --glass2: rgba(255,255,255,.10);
+
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 18px;
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
       background:
-        radial-gradient(1200px 600px at 20% 15%, rgba(67,243,210,.18), transparent 55%),
-        radial-gradient(900px 500px at 80% 10%, rgba(90,168,255,.16), transparent 55%),
-        radial-gradient(900px 600px at 50% 90%, rgba(67,243,210,.10), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1) 45%, #030812);
+        radial-gradient(1200px 700px at 15% 10%, rgba(85,230,255,.18), transparent 55%),
+        radial-gradient(900px 650px at 85% 15%, rgba(139,92,255,.16), transparent 55%),
+        radial-gradient(900px 700px at 50% 90%, rgba(34,197,94,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
 
-    a{color:inherit;text-decoration:none}
-    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+    a{color:inherit; text-decoration:none}
+    a:hover{opacity:.92}
 
+    .container{width:min(1100px, 92vw); margin-inline:auto}
+
+    /* ====== Glass helper ====== */
     .glass{
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      border: 1px solid var(--stroke);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, var(--glass), rgba(255,255,255,.04));
+      border:1px solid var(--border);
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
-      border-radius: var(--radius2);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
 
-    header{
+    /* ====== Top nav ====== */
+    .nav{
       position:sticky; top:0; z-index:50;
-      background: linear-gradient(180deg, rgba(5,11,20,.88), rgba(5,11,20,.55));
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding:14px 0;
+      background: linear-gradient(180deg, rgba(7,10,18,.75), rgba(7,10,18,.15));
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
     }
-
-    .nav{
+    .nav-inner{
       display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
       gap:12px;
     }
-
     .brand{
-      display:flex; align-items:center; gap:12px;
-      min-width: 210px;
+      display:flex; align-items:center; gap:10px;
+      min-width: 220px;
     }
-
     .brand img{
-      width:40px; height:40px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.18);
-      background: rgba(255,255,255,.06);
-      box-shadow: 0 10px 30px rgba(67,243,210,.10);
-      object-fit: cover;
+      width:40px; height:40px; border-radius:12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+    }
+    .brand strong{font-size:15px; letter-spacing:.2px}
+    .menu{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .pill{
+      padding:10px 12px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      transition: .2s ease;
+      font-size: 13px;
+    }
+    .pill:hover{transform: translateY(-1px); background: rgba(255,255,255,.075)}
+    .pill.primary{
+      border-color: rgba(85,230,255,.35);
+      background: linear-gradient(90deg, rgba(85,230,255,.16), rgba(139,92,255,.12));
     }
 
-    .brand h1{font-size:15px;margin:0;letter-spacing:.3px}
-    .brand p{margin:0; color:var(--muted2); font-size:12px}
-
-    .menu{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-      justify-content:flex-end;
+    /* ====== Hero ====== */
+    .hero{padding:40px 0 18px}
+    .hero-card{padding:22px}
+    .hero-top{
+      display:flex; align-items:center; justify-content:space-between; gap:18px;
+      flex-wrap:wrap;
     }
-
-    .chip{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:9px 12px; border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color: var(--muted);
-      font-size:13px;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-      user-select:none;
+    .hero h1{
+      margin:0;
+      font-size: clamp(28px, 4vw, 44px);
+      letter-spacing: .2px;
+      line-height:1.05;
     }
-    .chip:hover{transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18)}
-    .chip strong{color:var(--text); font-weight:700}
-
+    .tagline{margin:10px 0 0; color:var(--muted); max-width: 70ch}
+    .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
     .btn{
-      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      display:inline-flex; align-items:center; justify-content:center;
       padding:11px 14px;
       border-radius: 14px;
-      border:1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.06);
-      font-weight:700;
-      font-size:13px;
-      cursor:pointer;
-      transition: transform .15s ease, background .15s ease, border-color .15s ease;
-      user-select:none;
-      white-space:nowrap;
-    }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.22)}
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(67,243,210,.95), rgba(90,168,255,.95));
-      color:#03101a;
-      border-color: rgba(255,255,255,.28);
-    }
-    .btn.primary:hover{filter:saturate(1.05) brightness(1.02)}
-    .btn.ghost{background: transparent}
-
-    .hero{padding: 44px 0 18px;}
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.35fr .65fr;
-      gap:16px;
-      align-items:stretch;
-    }
-    @media (max-width: 940px){
-      .hero-grid{grid-template-columns:1fr}
-      .brand{min-width:auto}
-    }
-
-    .hero-card{padding: 26px; position:relative; overflow:hidden;}
-    .hero-card::before{
-      content:"";
-      position:absolute; inset:-1px;
-      background:
-        radial-gradient(600px 220px at 30% 10%, rgba(67,243,210,.25), transparent 60%),
-        radial-gradient(520px 220px at 90% 0%, rgba(90,168,255,.22), transparent 60%);
-      opacity:.9;
-      pointer-events:none;
-    }
-    .hero-card > *{position:relative}
-
-    .kicker{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:7px 10px;
-      border-radius:999px;
-      background: rgba(255,255,255,.05);
       border:1px solid rgba(255,255,255,.12);
-      color: var(--muted);
-      font-size:12px;
-      width:fit-content;
+      background: rgba(255,255,255,.06);
+      font-weight: 600;
+      font-size: 13px;
+      transition:.2s ease;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.085)}
+    .btn.accent{
+      border-color: rgba(85,230,255,.35);
+      background: linear-gradient(90deg, rgba(85,230,255,.18), rgba(139,92,255,.14));
     }
 
-    .dot{
-      width:9px;height:9px;border-radius:99px;
-      background: radial-gradient(circle at 30% 30%, #fff, rgba(255,255,255,.2));
-      box-shadow: 0 0 0 5px rgba(67,243,210,.12), 0 0 24px rgba(67,243,210,.2);
-    }
+    /* ====== “Slides” / Gallery (BIGGER) ====== */
+    .section{padding:18px 0}
+    .section h2{margin:0 0 10px; font-size: 18px}
+    .hint{color:var(--muted); font-size: 13px; margin:0 0 14px}
 
-    h2{
-      margin:14px 0 10px;
-      font-size: 42px;
-      line-height: 1.05;
-      letter-spacing: -0.6px;
-    }
-    @media (max-width: 520px){ h2{font-size: 34px} }
-
-    .subtitle{
-      margin:0 0 18px;
-      color: var(--muted);
-      font-size: 15.5px;
-      line-height:1.6;
-      max-width: 62ch;
-    }
-
-    .cta{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top: 6px;}
-
-    .metrics{
-      padding: 18px;
+    .slider{
       display:grid;
-      grid-template-columns: 1fr;
-      gap:12px;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(280px, 1fr);
+      gap:14px;
+      overflow:auto;
+      padding: 10px;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
     }
-    .stat{
-      padding: 14px 14px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.05);
+    .slide{
+      scroll-snap-align: start;
+      padding: 14px;
+    }
+
+    /* هذا اللي بيكبّر “السلايد” فعليًا */
+    .slide-media{
+      width:100%;
+      height: 260px;          /* <-- كبّر/صغّر */
+      border-radius: 16px;
+      overflow:hidden;
       border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.25);
+      box-shadow: 0 18px 55px rgba(0,0,0,.55);
     }
-    .stat b{display:block; font-size: 16px}
-    .stat span{display:block; color:var(--muted2); font-size: 12.5px; margin-top:6px; line-height:1.35}
-
-    section{padding: 18px 0}
-    .section-title{
-      display:flex; align-items:flex-end; justify-content:space-between;
-      gap:12px;
-      margin: 8px 0 12px;
+    .slide-media img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+      transform: scale(1.02);
     }
-    .section-title h3{margin:0; font-size: 18px; letter-spacing: .2px;}
-    .section-title p{margin:0; color: var(--muted2); font-size: 12.5px;}
+    .slide h3{margin:12px 0 6px; font-size: 15px}
+    .slide p{margin:0; color:var(--muted); font-size: 13px; line-height:1.55}
 
+    /* ====== Feature cards ====== */
     .grid{
       display:grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(12, 1fr);
       gap:14px;
     }
-    @media (max-width: 940px){ .grid{grid-template-columns:1fr 1fr} }
-    @media (max-width: 620px){ .grid{grid-template-columns:1fr} }
-
-    .card{
-      padding: 16px;
-      border-radius: var(--radius);
-      background: rgba(255,255,255,.05);
-      border: 1px solid rgba(255,255,255,.12);
-      position:relative;
-      overflow:hidden;
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
-    }
-    .card:hover{
-      transform: translateY(-2px);
-      border-color: rgba(255,255,255,.20);
-      background: rgba(255,255,255,.06);
+    .card{padding:16px}
+    .col-6{grid-column: span 6}
+    .col-4{grid-column: span 4}
+    @media (max-width: 900px){
+      .col-6,.col-4{grid-column: span 12}
+      .brand{min-width:auto}
+      .slide-media{height: 240px}
     }
 
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color: var(--muted);
-      width:fit-content;
+    /* ====== Code block theme (match images) ====== */
+    pre{
+      margin:0;
+      padding:16px;
+      border-radius: 16px;
+      border:1px solid rgba(85,230,255,.18);
+      background:
+        radial-gradient(600px 220px at 15% 0%, rgba(85,230,255,.16), transparent 55%),
+        radial-gradient(500px 240px at 85% 0%, rgba(139,92,255,.14), transparent 55%),
+        rgba(0,0,0,.34);
+      overflow:auto;
+      box-shadow: 0 18px 55px rgba(0,0,0,.55);
     }
-    .badge i{
-      width: 10px; height: 10px; border-radius: 99px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 0 0 4px rgba(67,243,210,.12);
-      display:inline-block;
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      color: rgba(255,255,255,.92);
     }
+    .tok-k{color: var(--a1)}   /* “keywords” */
+    .tok-s{color: #FBBF24}     /* strings */
+    .tok-c{color: rgba(255,255,255,.55)} /* comments */
 
-    .card h4{margin:10px 0 8px; font-size:15px}
-    .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.6}
-    .card ul{margin:10px 0 0; padding:0 0 0 18px; color:var(--muted); font-size:13px; line-height:1.7}
-
-    .hr{
-      height:1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent);
-      margin: 18px 0;
+    /* ====== Footer ====== */
+    footer{
+      padding:28px 0 40px;
+      color: rgba(255,255,255,.62);
+      font-size: 13px;
     }
-
-    footer{padding: 28px 0 34px; color: var(--muted2); font-size: 12.5px;}
-    .footer-grid{display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:space-between;}
-    .links{display:flex; gap:10px; flex-wrap:wrap}
-    .links a{
-      padding:8px 10px;
-      border-radius: 12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.03);
+    .foot{
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      flex-wrap:wrap;
     }
-    .links a:hover{background: rgba(255,255,255,.05)}
-
-    .pill-warn{
-      border-color: rgba(255,211,108,.35)!important;
-      background: rgba(255,211,108,.08)!important;
-      color: rgba(255,240,210,.95)!important;
-    }
-
-    /* RTL (Arabic) */
-    html[dir="rtl"] body{
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans Arabic", "Noto Sans", sans-serif;
-    }
-    html[dir="rtl"] .nav{flex-direction: row-reverse;}
-    html[dir="rtl"] .menu{justify-content:flex-start;}
-    html[dir="rtl"] .section-title{flex-direction: row-reverse;}
-    html[dir="rtl"] .card ul{padding:0 18px 0 0}
   </style>
 </head>
 
 <body>
-<header>
-  <div class="container">
-    <div class="nav" id="top">
-      <div class="brand">
-        <img src="assets/img/logo.png" alt="DefendIQOps Logo" />
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#top" aria-label="DefendIQOps Home">
+        <!-- غيّر اسم ملف اللوجو حسب الموجود عندك داخل assets -->
+        <img src="assets/defendiqops-logo.png" alt="DefendIQOps Logo">
         <div>
-          <h1 id="t_brand">DefendIQOps</h1>
-          <p id="t_tag">Build. Verify. Defend.</p>
+          <strong>DefendIQOps</strong><br>
+          <span style="color:var(--muted); font-size:12px;">Build. Verify. Defend.</span>
         </div>
-      </div>
+      </a>
 
-      <div class="menu">
-        <a class="chip" href="#tools"><strong id="t_nav_tools">Tools</strong></a>
-        <a class="chip" href="#roadmap"><strong id="t_nav_roadmap">Roadmap</strong></a>
-        <a class="chip" href="#contribute"><strong id="t_nav_contribute">Contribute</strong></a>
-
-        <button class="btn ghost" id="langBtn" type="button" aria-label="Toggle language">
-          🌐 <span id="t_lang">AR</span>
-        </button>
-
-        <a class="btn primary" id="btn_github" href="https://github.com/DefendIQOps" target="_blank" rel="noopener noreferrer">
-          ⭐ <span id="t_btn_github">GitHub</span>
-        </a>
-      </div>
+      <nav class="menu" aria-label="Primary">
+        <a class="pill" href="#tools">Tools</a>
+        <a class="pill" href="#roadmap">Roadmap</a>
+        <a class="pill" href="#contribute">Contribute</a>
+        <a class="pill primary" href="./ar/" title="Arabic">AR</a>
+        <a class="pill" href="https://github.com/DefendIQOps" target="_blank" rel="noreferrer">⭐ GitHub</a>
+      </nav>
     </div>
-  </div>
-</header>
+  </header>
 
-<main class="container">
-  <div class="hero">
-    <div class="hero-grid">
-      <div class="hero-card glass">
-        <div class="kicker">
-          <span class="dot" aria-hidden="true"></span>
-          <span id="t_kicker">Practical, defensive-first cybersecurity utilities</span>
+  <main id="top" class="container">
+    <section class="hero">
+      <div class="glass hero-card">
+        <div class="hero-top">
+          <div>
+            <h1>DefendIQOps</h1>
+            <p class="tagline">
+              Practical, defensive-first cybersecurity utilities — focused scanners, analyzers, and blue-team helpers with safe defaults and reproducible outputs.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn accent" href="#tools">Explore Tools</a>
+              <a class="btn" href="https://github.com/DefendIQOps/defendiqops.github.io" target="_blank" rel="noreferrer">View Repo</a>
+              <a class="btn" href="https://github.com/DefendIQOps/defendiqops.github.io/issues/new" target="_blank" rel="noreferrer">Suggest a Tool</a>
+            </div>
+
+            <p style="margin:14px 0 0; color:rgba(255,255,255,.55); font-size:12.5px;">
+              Authorized defensive use only • No offensive usage guidance
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== BIG SLIDES ====== -->
+    <section id="tools" class="section">
+      <h2>Tool Gallery</h2>
+      <p class="hint">هاي “السلايدات” كبّرتهم وخليتهم واضحين — اسحب يمين/شمال.</p>
+
+      <div class="slider">
+        <!-- بدّل الصور حسب اللي رفعتهم داخل assets -->
+        <article class="glass slide">
+          <div class="slide-media">
+            <img src="assets/slide-1.png" alt="Slide 1">
+          </div>
+          <h3>Scanners & Validators</h3>
+          <p>Safe checks for misconfigs, weak headers, risky exposure — بدون أي استغلال.</p>
+        </article>
+
+        <article class="glass slide">
+          <div class="slide-media">
+            <img src="assets/slide-2.png" alt="Slide 2">
+          </div>
+          <h3>Analyzers</h3>
+          <p>Log/URL/hash helpers for fast triage — clarity فوق كل شيء.</p>
+        </article>
+
+        <article class="glass slide">
+          <div class="slide-media">
+            <img src="assets/slide-3.png" alt="Slide 3">
+          </div>
+          <h3>Blue Team Utilities</h3>
+          <p>Workflows & templates for SOC/DFIR: collection, triage, reporting.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="grid">
+        <div class="glass card col-6">
+          <h2 style="margin:0 0 8px;">Defensive-first</h2>
+          <p class="hint" style="margin:0;">Designed for validation, hardening checks, and incident triage — safe, authorized use only.</p>
+        </div>
+        <div class="glass card col-6">
+          <h2 style="margin:0 0 8px;">Fast & Lightweight</h2>
+          <p class="hint" style="margin:0;">Small scripts, clear output, minimal dependencies — easy to run anywhere.</p>
         </div>
 
-        <h2 id="t_title">A lightweight hub for real-world defensive security tools.</h2>
-        <p class="subtitle" id="t_subtitle">
-          DefendIQOps publishes focused scanners, analyzers, and blue-team utilities with clear docs,
-          safe defaults, and reproducible outputs — built to help you validate, monitor, and respond fast.
+        <div class="glass card col-4">
+          <h2 style="margin:0 0 8px;">Docs that matter</h2>
+          <p class="hint" style="margin:0;">Simple usage, examples, safe notes, reproducible results.</p>
+        </div>
+
+        <div class="glass card col-8">
+          <h2 style="margin:0 0 10px;">Example Output (theme updated)</h2>
+          <pre><code><span class="tok-c"># safe header check (example)</span>
+<span class="tok-k">GET</span> https://example.com
+<span class="tok-k">RESULT</span>: ✅ baseline OK
+<span class="tok-k">MISSING</span>: <span class="tok-s">"Content-Security-Policy"</span> (recommend)
+<span class="tok-k">TLS</span>: ✅ modern ciphers
+<span class="tok-k">NOTES</span>: <span class="tok-s">"No exploitation performed"</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="roadmap" class="section">
+      <div class="glass card">
+        <h2 style="margin:0 0 10px;">Roadmap</h2>
+        <div class="grid">
+          <div class="glass card col-4">
+            <h3 style="margin:0 0 6px;">Phase 1</h3>
+            <p class="hint" style="margin:0;">Launch the first tool (clean README, examples, safe disclaimer).</p>
+          </div>
+          <div class="glass card col-4">
+            <h3 style="margin:0 0 6px;">Phase 2</h3>
+            <p class="hint" style="margin:0;">Consistent structure: install, usage, output, limitations, tests.</p>
+          </div>
+          <div class="glass card col-4">
+            <h3 style="margin:0 0 6px;">Phase 3</h3>
+            <p class="hint" style="margin:0;">Community-friendly growth: templates, contribution guide, releases.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contribute" class="section">
+      <div class="glass card">
+        <h2 style="margin:0 0 10px;">Contributing</h2>
+        <p class="hint" style="margin:0;">
+          PRs welcome — keep it clean and defensive. Suggest a tool with expected input/output and safe sample data.
         </p>
-
-        <div class="cta">
-          <a class="btn primary" id="t_btn_start" href="#tools">🚀 Explore Tools</a>
-          <a class="btn" id="t_btn_docs" href="https://github.com/DefendIQOps/defendiqops.github.io" target="_blank" rel="noopener noreferrer">📄 View Repo</a>
-          <a class="btn" id="t_btn_issues" href="https://github.com/DefendIQOps/defendiqops.github.io/issues" target="_blank" rel="noopener noreferrer">🧩 Suggest a Tool</a>
-        </div>
-
-        <div class="hr"></div>
-
-        <div class="badge pill-warn">
-          <i aria-hidden="true"></i>
-          <span id="t_disclaimer_short">Authorized defensive use only • No offensive usage guidance</span>
-        </div>
       </div>
+    </section>
 
-      <aside class="glass metrics">
-        <div class="stat">
-          <b id="t_stat1_title">Defensive-first</b>
-          <span id="t_stat1_desc">Tools designed for blue teams: validation, hardening checks, and incident triage.</span>
-        </div>
-        <div class="stat">
-          <b id="t_stat2_title">Fast & Lightweight</b>
-          <span id="t_stat2_desc">Small scripts, clear output, minimal dependencies — easy to run anywhere.</span>
-        </div>
-        <div class="stat">
-          <b id="t_stat3_title">Docs that matter</b>
-          <span id="t_stat3_desc">Simple usage, examples, safe notes, and reproducible results.</span>
-        </div>
-      </aside>
-    </div>
-  </div>
-
-  <section id="tools">
-    <div class="section-title">
-      <div>
-        <h3 id="t_tools_title">Tool Categories</h3>
-        <p id="t_tools_sub">Start small. Ship often. Keep it useful.</p>
+    <footer>
+      <div class="container foot">
+        <span>© DefendIQOps — Defensive use only.</span>
+        <span style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="pill" href="#top">Back to top ↑</a>
+          <a class="pill" href="https://github.com/DefendIQOps" target="_blank" rel="noreferrer">GitHub Org</a>
+        </span>
       </div>
-      <div class="badge"><i></i><span id="t_tools_badge">Initial release: building now</span></div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="badge"><i></i><span id="t_c1_badge">Scanners & Validators</span></div>
-        <h4 id="t_c1_title">Safe checks for common mistakes</h4>
-        <p id="t_c1_desc">Quick validation tools to catch misconfigurations, weak headers, risky exposure, and insecure defaults.</p>
-        <ul>
-          <li id="t_c1_li1">HTTP header & TLS posture checks</li>
-          <li id="t_c1_li2">Config sanity checks (best-practice baselines)</li>
-          <li id="t_c1_li3">Lightweight local audits (no exploitation)</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="badge"><i></i><span id="t_c2_badge">Analyzers</span></div>
-        <h4 id="t_c2_title">Turn raw data into signal</h4>
-        <p id="t_c2_desc">Small analyzers for logs, URLs, hashes, and artifacts — optimized for triage and clarity.</p>
-        <ul>
-          <li id="t_c2_li1">Log parsing helpers & quick summaries</li>
-          <li id="t_c2_li2">IOC normalization & de-duplication</li>
-          <li id="t_c2_li3">Artifact inspectors (safe, read-only)</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="badge"><i></i><span id="t_c3_badge">Blue Team Utilities</span></div>
-        <h4 id="t_c3_title">SOC/DFIR helpers that save time</h4>
-        <p id="t_c3_desc">Practical scripts and templates for incident workflows: collection, triage, reporting, and hygiene.</p>
-        <ul>
-          <li id="t_c3_li1">Triage checklists & report templates</li>
-          <li id="t_c3_li2">Safe evidence collection helpers</li>
-          <li id="t_c3_li3">Workflows you can reuse</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section id="roadmap">
-    <div class="section-title">
-      <div>
-        <h3 id="t_roadmap_title">Roadmap</h3>
-        <p id="t_roadmap_sub">Clear steps, no fluff.</p>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="badge"><i></i><span id="t_r1_badge">Phase 1</span></div>
-        <h4 id="t_r1_title">Launch the first tool</h4>
-        <p id="t_r1_desc">One focused repo with clean README, examples, and a safe disclaimer.</p>
-      </div>
-      <div class="card">
-        <div class="badge"><i></i><span id="t_r2_badge">Phase 2</span></div>
-        <h4 id="t_r2_title">Build a consistent standard</h4>
-        <p id="t_r2_desc">Same structure across tools: install, usage, output, limitations, tests (where possible).</p>
-      </div>
-      <div class="card">
-        <div class="badge"><i></i><span id="t_r3_badge">Phase 3</span></div>
-        <h4 id="t_r3_title">Community-friendly growth</h4>
-        <p id="t_r3_desc">Issues templates, contribution guide, and simple releases — easy for others to help.</p>
-      </div>
-    </div>
-
-    <div class="hr"></div>
-
-    <div class="card">
-      <div class="badge pill-warn"><i></i><span id="t_safe_title">Safety & Ethics</span></div>
-      <p id="t_safe_desc" style="margin-top:10px">
-        Tools here are built for <b>authorized defensive security</b> and educational purposes only.
-        Do not use them against systems you don’t own or don’t have explicit permission to test.
-      </p>
-    </div>
-  </section>
-
-  <section id="contribute">
-    <div class="section-title">
-      <div>
-        <h3 id="t_contrib_title">Contributing</h3>
-        <p id="t_contrib_sub">PRs are welcome — keep it clean and defensive.</p>
-      </div>
-    </div>
-
-    <div class="grid">
-      <div class="card">
-        <div class="badge"><i></i><span id="t_p1_badge">Suggest</span></div>
-        <h4 id="t_p1_title">Propose a tool idea</h4>
-        <p id="t_p1_desc">Open an issue with the problem, expected input/output, and safe sample data (if needed).</p>
-      </div>
-
-      <div class="card">
-        <div class="badge"><i></i><span id="t_p2_badge">Contribute</span></div>
-        <h4 id="t_p2_title">Send a PR</h4>
-        <p id="t_p2_desc">Small PRs are best: one improvement, one fix, or one feature with docs.</p>
-      </div>
-
-      <div class="card">
-        <div class="badge"><i></i><span id="t_p3_badge">Standard</span></div>
-        <h4 id="t_p3_title">Keep it predictable</h4>
-        <p id="t_p3_desc">Readable output, safe defaults, and clear limitations — no “magic”, no hidden behavior.</p>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="hr"></div>
-    <div class="footer-grid">
-      <div>
-        <b>DefendIQOps</b> — <span id="t_footer_line">Build. Verify. Defend.</span><br/>
-        <span>© <span id="year"></span> <span id="t_footer_small">DefendIQOps. Defensive use only.</span></span>
-      </div>
-      <div class="links">
-        <a href="https://github.com/DefendIQOps" target="_blank" rel="noopener noreferrer">GitHub Org</a>
-        <a href="https://github.com/DefendIQOps/defendiqops.github.io" target="_blank" rel="noopener noreferrer">Website Repo</a>
-        <a href="#top" id="t_backtop">Back to top ↑</a>
-      </div>
-    </div>
-  </footer>
-</main>
-
-<script>
-  const $ = (id)=>document.getElementById(id);
-  const html = document.documentElement;
-
-  const dict = {
-    en: {
-      langBtn: "AR",
-      tag: "Build. Verify. Defend.",
-      kicker: "Practical, defensive-first cybersecurity utilities",
-      title: "A lightweight hub for real-world defensive security tools.",
-      subtitle:
-        "DefendIQOps publishes focused scanners, analyzers, and blue-team utilities with clear docs, safe defaults, and reproducible outputs — built to help you validate, monitor, and respond fast.",
-      nav_tools: "Tools",
-      nav_roadmap: "Roadmap",
-      nav_contribute: "Contribute",
-      btn_github: "GitHub",
-      btn_start: "🚀 Explore Tools",
-      btn_docs: "📄 View Repo",
-      btn_issues: "🧩 Suggest a Tool",
-      disclaimer_short: "Authorized defensive use only • No offensive usage guidance",
-      stat1_title: "Defensive-first",
-      stat1_desc: "Tools designed for blue teams: validation, hardening checks, and incident triage.",
-      stat2_title: "Fast & Lightweight",
-      stat2_desc: "Small scripts, clear output, minimal dependencies — easy to run anywhere.",
-      stat3_title: "Docs that matter",
-      stat3_desc: "Simple usage, examples, safe notes, and reproducible results.",
-      tools_title: "Tool Categories",
-      tools_sub: "Start small. Ship often. Keep it useful.",
-      tools_badge: "Initial release: building now",
-      c1_badge: "Scanners & Validators",
-      c1_title: "Safe checks for common mistakes",
-      c1_desc: "Quick validation tools to catch misconfigurations, weak headers, risky exposure, and insecure defaults.",
-      c1_li1: "HTTP header & TLS posture checks",
-      c1_li2: "Config sanity checks (best-practice baselines)",
-      c1_li3: "Lightweight local audits (no exploitation)",
-      c2_badge: "Analyzers",
-      c2_title: "Turn raw data into signal",
-      c2_desc: "Small analyzers for logs, URLs, hashes, and artifacts — optimized for triage and clarity.",
-      c2_li1: "Log parsing helpers & quick summaries",
-      c2_li2: "IOC normalization & de-duplication",
-      c2_li3: "Artifact inspectors (safe, read-only)",
-      c3_badge: "Blue Team Utilities",
-      c3_title: "SOC/DFIR helpers that save time",
-      c3_desc: "Practical scripts and templates for incident workflows: collection, triage, reporting, and hygiene.",
-      c3_li1: "Triage checklists & report templates",
-      c3_li2: "Safe evidence collection helpers",
-      c3_li3: "Workflows you can reuse",
-      roadmap_title: "Roadmap",
-      roadmap_sub: "Clear steps, no fluff.",
-      r1_badge: "Phase 1",
-      r1_title: "Launch the first tool",
-      r1_desc: "One focused repo with clean README, examples, and a safe disclaimer.",
-      r2_badge: "Phase 2",
-      r2_title: "Build a consistent standard",
-      r2_desc: "Same structure across tools: install, usage, output, limitations, tests (where possible).",
-      r3_badge: "Phase 3",
-      r3_title: "Community-friendly growth",
-      r3_desc: "Issues templates, contribution guide, and simple releases — easy for others to help.",
-      safe_title: "Safety & Ethics",
-      safe_desc:
-        'Tools here are built for <b>authorized defensive security</b> and educational purposes only. Do not use them against systems you don’t own or don’t have explicit permission to test.',
-      contrib_title: "Contributing",
-      contrib_sub: "PRs are welcome — keep it clean and defensive.",
-      p1_badge: "Suggest",
-      p1_title: "Propose a tool idea",
-      p1_desc: "Open an issue with the problem, expected input/output, and safe sample data (if needed).",
-      p2_badge: "Contribute",
-      p2_title: "Send a PR",
-      p2_desc: "Small PRs are best: one improvement, one fix, or one feature with docs.",
-      p3_badge: "Standard",
-      p3_title: "Keep it predictable",
-      p3_desc: "Readable output, safe defaults, and clear limitations — no “magic”, no hidden behavior.",
-      footer_line: "Build. Verify. Defend.",
-      footer_small: "Defensive use only.",
-      backtop: "Back to top ↑",
-      titleTag: "DefendIQOps — Practical Defensive Cybersecurity Tools"
-    },
-
-    ar: {
-      langBtn: "EN",
-      tag: "ابنِ. تحقّق. دافع.",
-      kicker: "أدوات سيبرانية دفاعية عملية — بدون تعقيد",
-      title: "منصة خفيفة لأدوات الأمن السيبراني الدفاعية الواقعية.",
-      subtitle:
-        "DefendIQOps ينشر أدوات مركّزة للفحص والتحليل ومساندة فرق الـ Blue Team، مع توثيق واضح، إعدادات آمنة، ونتائج قابلة لإعادة الإنتاج — لتساعدك تراجع وتراقب وتستجيب بسرعة.",
-      nav_tools: "الأدوات",
-      nav_roadmap: "الخطة",
-      nav_contribute: "المساهمة",
-      btn_github: "GitHub",
-      btn_start: "🚀 تصفّح الأدوات",
-      btn_docs: "📄 فتح الريبو",
-      btn_issues: "🧩 اقترح أداة",
-      disclaimer_short: "للاستخدام الدفاعي المصرّح فقط • بدون إرشادات هجومية",
-      stat1_title: "دفاعي أولًا",
-      stat1_desc: "مصممة للـ Blue Team: تدقيقات، فحوصات تقوية، ومساعدة في الـ Triage.",
-      stat2_title: "سريعة وخفيفة",
-      stat2_desc: "سكريبتات صغيرة ومخرجات واضحة واعتماديات قليلة — بتشتغل بأي مكان.",
-      stat3_title: "توثيق مفيد فعلًا",
-      stat3_desc: "طريقة استخدام بسيطة + أمثلة + ملاحظات أمان + نتائج قابلة للتكرار.",
-      tools_title: "تصنيفات الأدوات",
-      tools_sub: "نبدأ صغير… وننشر بسرعة… ونخليها مفيدة.",
-      tools_badge: "إطلاق أولي: شغالين عليها الآن",
-      c1_badge: "فحوصات وتحقق",
-      c1_title: "فحوصات آمنة للأخطاء الشائعة",
-      c1_desc: "أدوات سريعة تلتقط سوء الإعدادات، الهيدرز الضعيفة، التعرض غير المقصود، والإعدادات الخطرة.",
-      c1_li1: "فحص هيدرز HTTP ووضع TLS",
-      c1_li2: "تحقق إعدادات حسب أفضل الممارسات",
-      c1_li3: "تدقيقات محلية خفيفة (بدون استغلال)",
-      c2_badge: "محللات",
-      c2_title: "حوّل البيانات لإشارات واضحة",
-      c2_desc: "محللات للّوغز، الروابط، الهاشات، والآرتيفاكتس — مناسبة للـ Triage والوضوح.",
-      c2_li1: "مساعدات Parsing وملخصات سريعة",
-      c2_li2: "تنظيف وتوحيد IOCs وإزالة التكرار",
-      c2_li3: "فحص آرتيفاكتس (قراءة فقط وآمن)",
-      c3_badge: "مساندة Blue Team",
-      c3_title: "أدوات SOC/DFIR بتوفر وقتك",
-      c3_desc: "سكريبتات وقوالب لخط سير الحوادث: جمع، فرز، تقارير، وهَيجين.",
-      c3_li1: "Checklists للـ Triage + قوالب تقارير",
-      c3_li2: "مساعدات جمع أدلة بشكل آمن",
-      c3_li3: "Workflows جاهزة لإعادة الاستخدام",
-      roadmap_title: "الخطة (Roadmap)",
-      roadmap_sub: "خطوات واضحة — بدون فلسفة.",
-      r1_badge: "مرحلة 1",
-      r1_title: "إطلاق أول أداة",
-      r1_desc: "ريبو واحد مركز + README نظيف + أمثلة + Disclaimer واضح.",
-      r2_badge: "مرحلة 2",
-      r2_title: "توحيد المعايير",
-      r2_desc: "نفس القالب لكل الأدوات: تثبيت، استخدام، مخرجات، حدود، واختبارات (إذا أمكن).",
-      r3_badge: "مرحلة 3",
-      r3_title: "نمو صديق للمجتمع",
-      r3_desc: "قوالب Issues + دليل مساهمة + Releases بسيطة — عشان أي حدا يساعد بسهولة.",
-      safe_title: "الأمان والأخلاقيات",
-      safe_desc:
-        "الأدوات هنا مخصصة للاستخدام الدفاعي المصرّح وللتعليم فقط. ممنوع استخدامها ضد أنظمة لا تملكها أو ما عندك إذن صريح لفحصها.",
-      contrib_title: "المساهمة",
-      contrib_sub: "أهلاً بأي PR — بس نخلي الشغل نظيف ودفاعي.",
-      p1_badge: "اقتراح",
-      p1_title: "اقترح فكرة أداة",
-      p1_desc: "افتح Issue واكتب المشكلة، المدخلات/المخرجات المتوقعة، وبيانات آمنة إن لزم.",
-      p2_badge: "مساهمة",
-      p2_title: "ابعث Pull Request",
-      p2_desc: "PR صغير أفضل: تحسين واحد أو إصلاح واحد أو ميزة مع توثيق.",
-      p3_badge: "معيار",
-      p3_title: "خليه واضح ومفهوم",
-      p3_desc: "مخرجات مقروءة + إعدادات آمنة + حدود واضحة — بدون سلوك مخفي.",
-      footer_line: "ابنِ. تحقّق. دافع.",
-      footer_small: "للاستخدام الدفاعي فقط.",
-      backtop: "رجوع للأعلى ↑",
-      titleTag: "DefendIQOps — أدوات دفاعية عملية للأمن السيبراني"
-    }
-  };
-
-  function setLang(lang){
-    const t = dict[lang];
-    html.setAttribute("data-lang", lang);
-
-    if(lang === "ar"){
-      html.setAttribute("lang","ar");
-      html.setAttribute("dir","rtl");
-    } else {
-      html.setAttribute("lang","en");
-      html.setAttribute("dir","ltr");
-    }
-
-    $("t_lang").textContent = t.langBtn;
-    $("t_tag").textContent = t.tag;
-    $("t_kicker").textContent = t.kicker;
-    $("t_title").textContent = t.title;
-    $("t_subtitle").textContent = t.subtitle;
-
-    $("t_nav_tools").textContent = t.nav_tools;
-    $("t_nav_roadmap").textContent = t.nav_roadmap;
-    $("t_nav_contribute").textContent = t.nav_contribute;
-
-    $("t_btn_github").textContent = t.btn_github;
-    $("t_btn_start").textContent = t.btn_start;
-    $("t_btn_docs").textContent = t.btn_docs;
-    $("t_btn_issues").textContent = t.btn_issues;
-
-    $("t_disclaimer_short").textContent = t.disclaimer_short;
-
-    $("t_stat1_title").textContent = t.stat1_title;
-    $("t_stat1_desc").textContent = t.stat1_desc;
-    $("t_stat2_title").textContent = t.stat2_title;
-    $("t_stat2_desc").textContent = t.stat2_desc;
-    $("t_stat3_title").textContent = t.stat3_title;
-    $("t_stat3_desc").textContent = t.stat3_desc;
-
-    $("t_tools_title").textContent = t.tools_title;
-    $("t_tools_sub").textContent = t.tools_sub;
-    $("t_tools_badge").textContent = t.tools_badge;
-
-    $("t_c1_badge").textContent = t.c1_badge;
-    $("t_c1_title").textContent = t.c1_title;
-    $("t_c1_desc").textContent = t.c1_desc;
-    $("t_c1_li1").textContent = t.c1_li1;
-    $("t_c1_li2").textContent = t.c1_li2;
-    $("t_c1_li3").textContent = t.c1_li3;
-
-    $("t_c2_badge").textContent = t.c2_badge;
-    $("t_c2_title").textContent = t.c2_title;
-    $("t_c2_desc").textContent = t.c2_desc;
-    $("t_c2_li1").textContent = t.c2_li1;
-    $("t_c2_li2").textContent = t.c2_li2;
-    $("t_c2_li3").textContent = t.c2_li3;
-
-    $("t_c3_badge").textContent = t.c3_badge;
-    $("t_c3_title").textContent = t.c3_title;
-    $("t_c3_desc").textContent = t.c3_desc;
-    $("t_c3_li1").textContent = t.c3_li1;
-    $("t_c3_li2").textContent = t.c3_li2;
-    $("t_c3_li3").textContent = t.c3_li3;
-
-    $("t_roadmap_title").textContent = t.roadmap_title;
-    $("t_roadmap_sub").textContent = t.roadmap_sub;
-
-    $("t_r1_badge").textContent = t.r1_badge;
-    $("t_r1_title").textContent = t.r1_title;
-    $("t_r1_desc").textContent = t.r1_desc;
-
-    $("t_r2_badge").textContent = t.r2_badge;
-    $("t_r2_title").textContent = t.r2_title;
-    $("t_r2_desc").textContent = t.r2_desc;
-
-    $("t_r3_badge").textContent = t.r3_badge;
-    $("t_r3_title").textContent = t.r3_title;
-    $("t_r3_desc").textContent = t.r3_desc;
-
-    $("t_safe_title").textContent = t.safe_title;
-    $("t_safe_desc").innerHTML = t.safe_desc;
-
-    $("t_contrib_title").textContent = t.contrib_title;
-    $("t_contrib_sub").textContent = t.contrib_sub;
-
-    $("t_p1_badge").textContent = t.p1_badge;
-    $("t_p1_title").textContent = t.p1_title;
-    $("t_p1_desc").textContent = t.p1_desc;
-
-    $("t_p2_badge").textContent = t.p2_badge;
-    $("t_p2_title").textContent = t.p2_title;
-    $("t_p2_desc").textContent = t.p2_desc;
-
-    $("t_p3_badge").textContent = t.p3_badge;
-    $("t_p3_title").textContent = t.p3_title;
-    $("t_p3_desc").textContent = t.p3_desc;
-
-    $("t_footer_line").textContent = t.footer_line;
-    $("t_footer_small").textContent = t.footer_small;
-    $("t_backtop").textContent = t.backtop;
-
-    document.title = t.titleTag;
-
-    localStorage.setItem("defendiqops_lang", lang);
-  }
-
-  $("year").textContent = new Date().getFullYear();
-
-  const saved = localStorage.getItem("defendiqops_lang");
-  let current = (saved === "ar" || saved === "en") ? saved : "en";
-  setLang(current);
-
-  $("langBtn").addEventListener("click", ()=>{
-    current = (current === "en") ? "ar" : "en";
-    setLang(current);
-  });
-</script>
+    </footer>
+  </main>
 </body>
 </html>
