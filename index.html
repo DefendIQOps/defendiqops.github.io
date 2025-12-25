@@ -45,8 +45,10 @@
       overflow-x:hidden;
     }
 
-    html[data-lang="ar"] body{
+    /* RTL support */
+    html[dir="rtl"] body{
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans Arabic", "Noto Sans", sans-serif;
+      text-align:right;
     }
 
     a{color:inherit;text-decoration:none}
@@ -78,7 +80,6 @@
       min-width: 210px;
     }
     html[dir="rtl"] .brand{flex-direction:row-reverse}
-
     .logo{
       width:40px;height:40px;border-radius:14px;
       background:
@@ -113,7 +114,6 @@
       font-size:13px;
       transition: transform .15s ease, background .15s ease, border-color .15s ease;
       user-select:none;
-      white-space:nowrap;
     }
     .chip:hover{transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18)}
     .chip strong{color:var(--text); font-weight:700}
@@ -137,11 +137,10 @@
       color:#03101a;
       border-color: rgba(255,255,255,.28);
     }
-    .btn.primary:hover{filter:saturate(1.05) brightness(1.02)}
     .btn.ghost{background: transparent}
 
     /* Hero */
-    .hero{padding: 44px 0 18px;}
+    .hero{ padding: 44px 0 18px; }
     .hero-grid{
       display:grid;
       grid-template-columns: 1.35fr .65fr;
@@ -200,8 +199,7 @@
       line-height:1.6;
       max-width: 62ch;
     }
-
-    .cta{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top: 6px;}
+    .cta{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:6px; }
     html[dir="rtl"] .cta{justify-content:flex-start}
 
     .metrics{
@@ -219,15 +217,14 @@
     .stat b{display:block; font-size: 16px}
     .stat span{display:block; color:var(--muted2); font-size: 12.5px; margin-top:6px; line-height:1.35}
 
-    /* Sections */
     section{padding: 18px 0}
     .section-title{
       display:flex; align-items:flex-end; justify-content:space-between;
       gap:12px;
       margin: 8px 0 12px;
     }
-    .section-title h3{margin:0; font-size: 18px; letter-spacing: .2px;}
-    .section-title p{margin:0; color: var(--muted2); font-size: 12.5px;}
+    .section-title h3{ margin:0; font-size: 18px; letter-spacing: .2px; }
+    .section-title p{ margin:0; color: var(--muted2); font-size: 12.5px; }
 
     .grid{
       display:grid;
@@ -251,7 +248,6 @@
       border-color: rgba(255,255,255,.20);
       background: rgba(255,255,255,.06);
     }
-
     .badge{
       display:inline-flex; align-items:center; gap:8px;
       padding: 7px 10px;
@@ -270,13 +266,8 @@
     }
     .card h4{margin:10px 0 8px; font-size:15px}
     .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.6}
-    .card ul{
-      margin:10px 0 0;
-      padding-inline-start: 18px;
-      color:var(--muted);
-      font-size:13px;
-      line-height:1.7
-    }
+    .card ul{margin:10px 0 0; padding:0 0 0 18px; color:var(--muted); font-size:13px; line-height:1.7}
+    html[dir="rtl"] .card ul{padding:0 18px 0 0}
 
     .hr{
       height:1px;
@@ -284,8 +275,11 @@
       margin: 18px 0;
     }
 
-    /* Footer */
-    footer{padding: 28px 0 34px; color: var(--muted2); font-size: 12.5px;}
+    footer{
+      padding: 28px 0 34px;
+      color: var(--muted2);
+      font-size: 12.5px;
+    }
     .footer-grid{
       display:flex; flex-wrap:wrap; gap:12px;
       align-items:center; justify-content:space-between;
@@ -303,10 +297,6 @@
       border-color: rgba(255,211,108,.35)!important;
       background: rgba(255,211,108,.08)!important;
       color: rgba(255,240,210,.95)!important;
-    }
-
-    @media (prefers-reduced-motion: reduce){
-      *{transition:none!important; scroll-behavior:auto!important}
     }
   </style>
 </head>
@@ -332,8 +322,8 @@
           🌐 <span id="t_lang">AR</span>
         </button>
 
-        <a class="btn primary" id="btnGithub" href="https://github.com/DefendIQOps" target="_blank" rel="noreferrer">
-          ⭐ <span id="t_btn_github">GitHub</span>
+        <a class="btn primary" id="t_btn_github" href="https://github.com/DefendIQOps" target="_blank" rel="noreferrer">
+          ⭐ <span id="t_btn_github_text">GitHub</span>
         </a>
       </div>
     </div>
@@ -341,7 +331,7 @@
 </header>
 
 <main class="container">
-  <div class="hero">
+  <div class="hero" id="hero">
     <div class="hero-grid">
       <div class="hero-card glass">
         <div class="kicker">
@@ -462,7 +452,7 @@
     <div class="card">
       <div class="badge pill-warn"><i></i><span id="t_safe_title">Safety & Ethics</span></div>
       <p id="t_safe_desc" style="margin-top:10px">
-        Tools here are built for authorized defensive security and educational purposes only.
+        Tools here are built for <b>authorized defensive security</b> and educational purposes only.
         Do not use them against systems you don’t own or don’t have explicit permission to test.
       </p>
     </div>
@@ -502,7 +492,7 @@
     <div class="footer-grid">
       <div>
         <b>DefendIQOps</b> — <span id="t_footer_line">Build. Verify. Defend.</span><br/>
-        <span id="t_footer_small">© <span id="year"></span> DefendIQOps. Defensive use only.</span>
+        <span>© <span id="year"></span> <span id="t_footer_small">Defensive use only.</span></span>
       </div>
       <div class="links">
         <a href="https://github.com/DefendIQOps" target="_blank" rel="noreferrer">GitHub Org</a>
@@ -519,17 +509,19 @@
 
   const dict = {
     en: {
-      ui_lang_btn: "AR",
-      brand: "DefendIQOps",
+      langBtn: "AR",
+      htmlLang: "en",
+      dir: "ltr",
+      title: "DefendIQOps — Practical Defensive Cybersecurity Tools",
+      metaDesc: "DefendIQOps is a hub of practical, lightweight defensive cybersecurity tools and documentation for blue teams and security engineers.",
       tag: "Build. Verify. Defend.",
       kicker: "Practical, defensive-first cybersecurity utilities",
-      title: "A lightweight hub for real-world defensive security tools.",
-      subtitle:
-        "DefendIQOps publishes focused scanners, analyzers, and blue-team utilities with clear docs, safe defaults, and reproducible outputs — built to help you validate, monitor, and respond fast.",
+      h1: "A lightweight hub for real-world defensive security tools.",
+      subtitle: "DefendIQOps publishes focused scanners, analyzers, and blue-team utilities with clear docs, safe defaults, and reproducible outputs — built to help you validate, monitor, and respond fast.",
       nav_tools: "Tools",
       nav_roadmap: "Roadmap",
       nav_contribute: "Contribute",
-      btn_github: "GitHub",
+      btn_github_text: "GitHub",
       btn_start: "🚀 Explore Tools",
       btn_docs: "📄 View Repo",
       btn_issues: "🧩 Suggest a Tool",
@@ -573,8 +565,7 @@
       r3_title: "Community-friendly growth",
       r3_desc: "Issues templates, contribution guide, and simple releases — easy for others to help.",
       safe_title: "Safety & Ethics",
-      safe_desc:
-        "Tools here are built for authorized defensive security and educational purposes only. Do not use them against systems you don’t own or don’t have explicit permission to test.",
+      safe_desc_html: 'Tools here are built for <b>authorized defensive security</b> and educational purposes only. Do not use them against systems you don’t own or don’t have explicit permission to test.',
       contrib_title: "Contributing",
       contrib_sub: "PRs are welcome — keep it clean and defensive.",
       p1_badge: "Suggest",
@@ -585,40 +576,39 @@
       p2_desc: "Small PRs are best: one improvement, one fix, or one feature with docs.",
       p3_badge: "Standard",
       p3_title: "Keep it predictable",
-      p3_desc: "Readable output, safe defaults, and clear limitations — no hidden behavior.",
+      p3_desc: "Readable output, safe defaults, and clear limitations — no “magic”, no hidden behavior.",
       footer_line: "Build. Verify. Defend.",
       footer_small: "Defensive use only.",
-      backtop: "Back to top ↑",
-      page_title: "DefendIQOps — Practical Defensive Cybersecurity Tools",
-      page_desc: "DefendIQOps is a hub of practical, lightweight defensive cybersecurity tools and documentation for blue teams and security engineers."
+      backtop: "Back to top ↑"
     },
-
     ar: {
-      ui_lang_btn: "EN",
-      brand: "DefendIQOps",
+      langBtn: "EN",
+      htmlLang: "ar",
+      dir: "rtl",
+      title: "DefendIQOps — أدوات دفاعية عملية للأمن السيبراني",
+      metaDesc: "DefendIQOps منصة خفيفة لأدوات الأمن السيبراني الدفاعية للـ Blue Team مع توثيق واضح ومخرجات قابلة للتكرار.",
       tag: "ابنِ. تحقّق. دافع.",
       kicker: "أدوات سيبرانية دفاعية عملية — بدون تعقيد",
-      title: "منصة خفيفة لأدوات الأمن السيبراني الدفاعية الواقعية.",
-      subtitle:
-        "DefendIQOps ينشر أدوات مركّزة للفحص والتحليل ومساندة فرق الـ Blue Team، مع توثيق واضح، إعدادات آمنة، ونتائج قابلة لإعادة الإنتاج — لتساعدك تراجع وتراقب وتستجيب بسرعة.",
+      h1: "منصة خفيفة لأدوات الأمن السيبراني الدفاعية الواقعية.",
+      subtitle: "DefendIQOps ينشر أدوات مركّزة للفحص والتحليل ومساندة فرق الـ Blue Team، مع توثيق واضح، إعدادات آمنة، ونتائج قابلة لإعادة الإنتاج — لتساعدك تراجع وتراقب وتستجيب بسرعة.",
       nav_tools: "الأدوات",
       nav_roadmap: "الخطة",
       nav_contribute: "المساهمة",
-      btn_github: "GitHub",
+      btn_github_text: "GitHub",
       btn_start: "🚀 تصفّح الأدوات",
       btn_docs: "📄 فتح الريبو",
       btn_issues: "🧩 اقترح أداة",
       disclaimer_short: "للاستخدام الدفاعي المصرّح فقط • بدون إرشادات هجومية",
       stat1_title: "دفاعي أولًا",
-      stat1_desc: "مصممة للـ Blue Team: تدقيقات، فحوصات تقوية، ومساعدة في الفرز (Triage).",
+      stat1_desc: "مصممة للـ Blue Team: تدقيقات، فحوصات تقوية، ومساعدة في الـ Triage.",
       stat2_title: "سريعة وخفيفة",
       stat2_desc: "سكريبتات صغيرة ومخرجات واضحة واعتماديات قليلة — بتشتغل بأي مكان.",
       stat3_title: "توثيق مفيد فعلًا",
-      stat3_desc: "طريقة استخدام بسيطة + أمثلة + ملاحظات أمان + نتائج قابلة للتكرار.",
+      stat3_desc: "استخدام بسيط + أمثلة + ملاحظات أمان + نتائج قابلة للتكرار.",
       tools_title: "تصنيفات الأدوات",
       tools_sub: "نبدأ صغير… وننشر بسرعة… ونخليها مفيدة.",
       tools_badge: "إطلاق أولي: شغالين عليها الآن",
-      c1_badge: "فحوصات وتحقّق",
+      c1_badge: "فحوصات وتحقق",
       c1_title: "فحوصات آمنة للأخطاء الشائعة",
       c1_desc: "أدوات سريعة تلتقط سوء الإعدادات، الهيدرز الضعيفة، التعرض غير المقصود، والإعدادات الخطرة.",
       c1_li1: "فحص هيدرز HTTP ووضع TLS",
@@ -626,18 +616,18 @@
       c1_li3: "تدقيقات محلية خفيفة (بدون استغلال)",
       c2_badge: "محللات",
       c2_title: "حوّل البيانات لإشارات واضحة",
-      c2_desc: "محللات للّوغز، الروابط، الهاشات، والآرتيفاكتس — مناسبة للفرز والوضوح.",
+      c2_desc: "محللات للّوغز، الروابط، الهاشات، والآرتيفاكتس — مناسبة للـ Triage والوضوح.",
       c2_li1: "مساعدات Parsing وملخصات سريعة",
       c2_li2: "تنظيف وتوحيد IOCs وإزالة التكرار",
       c2_li3: "فحص آرتيفاكتس (قراءة فقط وآمن)",
       c3_badge: "مساندة Blue Team",
       c3_title: "أدوات SOC/DFIR بتوفر وقتك",
-      c3_desc: "سكريبتات وقوالب لمسار الحوادث: جمع، فرز، تقارير، ونظافة أمنية.",
-      c3_li1: "قوائم فرز + قوالب تقارير",
+      c3_desc: "سكريبتات وقوالب لخط سير الحوادث: جمع، فرز، تقارير، وهَيجين.",
+      c3_li1: "Checklists للـ Triage + قوالب تقارير",
       c3_li2: "مساعدات جمع أدلة بشكل آمن",
-      c3_li3: "مسارات عمل قابلة لإعادة الاستخدام",
+      c3_li3: "Workflows جاهزة لإعادة الاستخدام",
       roadmap_title: "الخطة (Roadmap)",
-      roadmap_sub: "خطوات واضحة — بدون حكي زايد.",
+      roadmap_sub: "خطوات واضحة — بدون فلسفة.",
       r1_badge: "مرحلة 1",
       r1_title: "إطلاق أول أداة",
       r1_desc: "ريبو واحد مركز + README نظيف + أمثلة + Disclaimer واضح.",
@@ -648,10 +638,9 @@
       r3_title: "نمو صديق للمجتمع",
       r3_desc: "قوالب Issues + دليل مساهمة + Releases بسيطة — عشان أي حدا يساعد بسهولة.",
       safe_title: "الأمان والأخلاقيات",
-      safe_desc:
-        "الأدوات هنا مخصصة للاستخدام الدفاعي المصرّح وللتعليم فقط. ممنوع استخدامها ضد أنظمة لا تملكها أو ما عندك إذن صريح لفحصها.",
+      safe_desc_html: "الأدوات هنا مخصصة للاستخدام الدفاعي المصرّح وللتعليم فقط. ممنوع استخدامها ضد أنظمة لا تملكها أو ما عندك إذن صريح لفحصها.",
       contrib_title: "المساهمة",
-      contrib_sub: "أهلًا بأي PR — بس نخلي الشغل نظيف ودفاعي.",
+      contrib_sub: "أهلاً بأي PR — بس نخلي الشغل نظيف ودفاعي.",
       p1_badge: "اقتراح",
       p1_title: "اقترح فكرة أداة",
       p1_desc: "افتح Issue واكتب المشكلة، المدخلات/المخرجات المتوقعة، وبيانات آمنة إن لزم.",
@@ -663,43 +652,36 @@
       p3_desc: "مخرجات مقروءة + إعدادات آمنة + حدود واضحة — بدون سلوك مخفي.",
       footer_line: "ابنِ. تحقّق. دافع.",
       footer_small: "للاستخدام الدفاعي فقط.",
-      backtop: "رجوع للأعلى ↑",
-      page_title: "DefendIQOps — أدوات دفاعية عملية للأمن السيبراني",
-      page_desc: "DefendIQOps منصة لأدوات الأمن السيبراني الدفاعية الخفيفة مع توثيق واضح لفرق الـ Blue Team."
+      backtop: "رجوع للأعلى ↑"
     }
   };
 
-  function setMeta(title, desc){
-    document.title = title;
+  function setMeta(desc){
     const meta = document.querySelector('meta[name="description"]');
     if(meta) meta.setAttribute("content", desc);
   }
 
-  function applyLang(lang){
+  function setLang(lang){
     const t = dict[lang];
-    html.dataset.lang = lang;
+    html.setAttribute("data-lang", lang);
+    html.setAttribute("lang", t.htmlLang);
+    html.setAttribute("dir", t.dir);
 
-    // Proper RTL/Lang handling
-    if(lang === "ar"){
-      html.setAttribute("dir","rtl");
-      html.setAttribute("lang","ar");
-    }else{
-      html.setAttribute("dir","ltr");
-      html.setAttribute("lang","en");
-    }
+    document.title = t.title;
+    setMeta(t.metaDesc);
 
-    $("t_lang").textContent = t.ui_lang_btn;
-    $("t_brand").textContent = t.brand;
+    $("t_lang").textContent = t.langBtn;
+
     $("t_tag").textContent = t.tag;
     $("t_kicker").textContent = t.kicker;
-    $("t_title").textContent = t.title;
+    $("t_title").textContent = t.h1;
     $("t_subtitle").textContent = t.subtitle;
 
     $("t_nav_tools").textContent = t.nav_tools;
     $("t_nav_roadmap").textContent = t.nav_roadmap;
     $("t_nav_contribute").textContent = t.nav_contribute;
 
-    $("t_btn_github").textContent = t.btn_github;
+    $("t_btn_github_text").textContent = t.btn_github_text;
     $("t_btn_start").textContent = t.btn_start;
     $("t_btn_docs").textContent = t.btn_docs;
     $("t_btn_issues").textContent = t.btn_issues;
@@ -754,7 +736,7 @@
     $("t_r3_desc").textContent = t.r3_desc;
 
     $("t_safe_title").textContent = t.safe_title;
-    $("t_safe_desc").textContent = t.safe_desc;
+    $("t_safe_desc").innerHTML = t.safe_desc_html;
 
     $("t_contrib_title").textContent = t.contrib_title;
     $("t_contrib_sub").textContent = t.contrib_sub;
@@ -772,20 +754,25 @@
     $("t_p3_desc").textContent = t.p3_desc;
 
     $("t_footer_line").textContent = t.footer_line;
-    $("t_footer_small").textContent = `© ${new Date().getFullYear()} DefendIQOps. ${t.footer_small}`;
+    $("t_footer_small").textContent = t.footer_small;
     $("t_backtop").textContent = t.backtop;
 
-    setMeta(t.page_title, t.page_desc);
+    // Save preference
+    try{ localStorage.setItem("defendiqops_lang", lang); }catch(e){}
   }
 
   // init
   $("year").textContent = new Date().getFullYear();
   let current = "en";
-  applyLang(current);
+  try{
+    const saved = localStorage.getItem("defendiqops_lang");
+    if(saved && dict[saved]) current = saved;
+  }catch(e){}
+  setLang(current);
 
   $("langBtn").addEventListener("click", ()=>{
     current = (current === "en") ? "ar" : "en";
-    applyLang(current);
+    setLang(current);
   });
 </script>
 </body>
