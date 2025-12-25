@@ -2,470 +2,527 @@
 <html lang="en" data-lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b1220" />
-  <title>DefendIQOps — Defensive-first security</title>
-  <meta name="description" content="Defensive-first cybersecurity tools. No exploitation. No abuse. Only protection." />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#061018" />
+  <title>DefendIQOps</title>
 
   <style>
     :root{
-      --bg0:#060b12;
-      --bg1:#08111f;
-      --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.08);
-      --border:rgba(255,255,255,.10);
-      --text:#e7edf6;
-      --muted:rgba(231,237,246,.72);
-      --glow:rgba(67, 213, 255, .55);
-      --glow2:rgba(67, 213, 255, .20);
-      --shadow: 0 20px 60px rgba(0,0,0,.55);
-      --radius:18px;
-      --radius2:24px;
-      --max:1100px;
+      --bg0:#050c12;
+      --bg1:#061018;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.09);
+      --stroke: rgba(255,255,255,.12);
+      --glow: rgba(0, 240, 255, .22);
+      --glow2: rgba(0, 240, 255, .10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.68);
+      --muted2: rgba(255,255,255,.55);
+      --shadow: 0 18px 40px rgba(0,0,0,.55);
+      --radius: 20px;
+      --radius2: 26px;
+      --max: 1100px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue";
+      font-family: var(--sans);
       color:var(--text);
       background:
-        radial-gradient(1200px 800px at 10% 10%, rgba(67,213,255,.12), transparent 60%),
-        radial-gradient(1000px 700px at 90% 20%, rgba(67,213,255,.08), transparent 55%),
-        radial-gradient(900px 600px at 60% 90%, rgba(67,213,255,.06), transparent 55%),
-        linear-gradient(180deg, var(--bg1), var(--bg0));
+        radial-gradient(1000px 600px at 20% 0%, rgba(0,240,255,.12), transparent 60%),
+        radial-gradient(900px 560px at 85% 15%, rgba(0,240,255,.10), transparent 55%),
+        radial-gradient(700px 460px at 55% 95%, rgba(0,240,255,.08), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
 
-    a{color:inherit; text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:24px 16px 70px}
-
-    /* glass card */
-    .glass{
-      background: linear-gradient(180deg, var(--card2), var(--card));
-      border:1px solid var(--border);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-    .glass::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(700px 220px at 30% 0%, rgba(67,213,255,.14), transparent 70%);
-      pointer-events:none;
-    }
-
-    /* top bar */
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:22px 16px 64px}
     .topbar{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px;
-      padding:14px 14px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.05));
-      border:1px solid rgba(255,255,255,.10);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 10px 40px rgba(0,0,0,.40);
-      margin-bottom:18px;
+      position:sticky; top:0; z-index:30;
+      padding:12px 0;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(6,16,24,.85), rgba(6,16,24,.35));
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    .topbar-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
     }
     .brand{
       display:flex; align-items:center; gap:10px; min-width:0;
     }
-    .logoDot{
-      width:34px; height:34px; border-radius:10px;
-      background: radial-gradient(circle at 30% 20%, rgba(67,213,255,.85), rgba(67,213,255,.15));
-      border:1px solid rgba(255,255,255,.14);
-      box-shadow: 0 0 0 1px rgba(67,213,255,.18), 0 0 22px rgba(67,213,255,.22);
+    .logo{
+      width:34px; height:34px;
+      border-radius:12px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: 0 0 0 1px rgba(0,240,255,.06), 0 10px 22px rgba(0,0,0,.35);
       display:grid; place-items:center;
-      font-weight:800;
+      overflow:hidden;
     }
-    .brandText{min-width:0}
-    .brandText b{display:block; font-size:14px; letter-spacing:.2px}
-    .brandText span{display:block; font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-
+    .logo span{
+      font-size:12px;
+      font-weight:800;
+      color: rgba(255,255,255,.86);
+      letter-spacing:.5px;
+    }
+    .brand h1{
+      margin:0; font-size:14px; line-height:1.1;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
+    .brand p{
+      margin:0; font-size:12px; color:var(--muted2);
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    }
     .menuBtn{
-      width:40px; height:40px; border-radius:12px;
+      width:40px;height:40px;border-radius:14px;
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.06);
-      color:var(--text);
+      backdrop-filter: blur(12px);
       display:grid; place-items:center;
       cursor:pointer;
-      box-shadow: 0 0 0 1px rgba(67,213,255,.06);
     }
-    .menuBtn:hover{box-shadow:0 0 0 1px rgba(67,213,255,.20), 0 0 26px rgba(67,213,255,.10)}
+    .menuBtn:active{transform: translateY(1px)}
+    .menuDots{
+      width:16px;height:10px; position:relative;
+    }
+    .menuDots:before,.menuDots:after,.menuDots i{
+      content:""; position:absolute; left:0; right:0; margin:auto;
+      width:16px; height:2px; border-radius:2px;
+      background: rgba(255,255,255,.78);
+      opacity:.9;
+    }
+    .menuDots:before{top:0}
+    .menuDots i{top:4px}
+    .menuDots:after{top:8px}
 
-    /* hero */
-    .hero{padding:22px 18px 18px}
+    .hero{
+      margin-top:14px;
+      padding:22px;
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid rgba(255,255,255,.12);
+      box-shadow: var(--shadow), 0 0 0 1px rgba(0,240,255,.08), 0 0 70px rgba(0,240,255,.10);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(900px 360px at 20% 20%, rgba(0,240,255,.16), transparent 55%);
+      pointer-events:none;
+    }
     .heroGrid{
       display:grid;
       grid-template-columns: 1.2fr .8fr;
-      gap:16px;
-      align-items:start;
+      gap:18px;
+      position:relative;
     }
     @media (max-width: 860px){
-      .heroGrid{grid-template-columns:1fr; }
+      .heroGrid{grid-template-columns:1fr}
     }
-
-    h1{margin:0 0 6px; font-size:28px; letter-spacing:.2px}
-    .sub{margin:0; color:var(--muted); line-height:1.5; font-size:13.5px; max-width:62ch}
-
-    .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
+    .hero h2{
+      margin:0 0 6px 0;
+      font-size:28px;
+      letter-spacing:.2px;
+    }
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      max-width: 62ch;
+      line-height:1.45;
+      font-size:14px;
+    }
+    .btnRow{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:14px;
+    }
     .btn{
       padding:10px 12px;
       border-radius: 999px;
       border:1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.06);
-      color:var(--text);
-      font-weight:700;
+      backdrop-filter: blur(12px);
+      color: rgba(255,255,255,.88);
       font-size:13px;
+      font-weight:700;
+      display:inline-flex; align-items:center; gap:8px;
       cursor:pointer;
-      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
-      box-shadow: 0 0 0 1px rgba(67,213,255,.06);
-    }
-    .btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(67,213,255,.30);
-      box-shadow: 0 0 0 1px rgba(67,213,255,.24), 0 0 28px rgba(67,213,255,.10);
+      user-select:none;
     }
     .btn.primary{
-      background: radial-gradient(circle at 30% 20%, rgba(67,213,255,.18), rgba(255,255,255,.06));
-      border-color: rgba(67,213,255,.35);
+      border-color: rgba(0,240,255,.28);
+      box-shadow: 0 0 0 1px rgba(0,240,255,.10), 0 0 30px rgba(0,240,255,.16);
     }
 
-    /* console */
-    .console{
-      border-radius: var(--radius);
+    .chips{
+      display:grid; gap:10px;
+      align-content:start;
+    }
+    .chip{
+      padding:12px;
+      border-radius:16px;
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.28);
-      padding:12px 12px 10px;
-      position:relative;
+      background: rgba(255,255,255,.05);
+    }
+    .chip b{display:block; font-size:12px; margin-bottom:4px}
+    .chip span{display:block; font-size:12px; color:var(--muted2); line-height:1.35}
+
+    .console{
+      margin-top:14px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.26);
+      box-shadow: inset 0 0 0 1px rgba(0,240,255,.05);
       overflow:hidden;
     }
     .consoleHead{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      margin-bottom:10px;
+      padding:10px 12px;
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background: rgba(255,255,255,.04);
     }
-    .dots{display:flex; gap:6px}
-    .dot{width:9px; height:9px; border-radius:50%}
+    .dots{display:flex; gap:6px; align-items:center}
+    .dot{width:9px;height:9px;border-radius:50%}
     .dot.r{background:#ff5f57}
     .dot.y{background:#febc2e}
     .dot.g{background:#28c840}
-    .tip{font-size:11px; color:rgba(231,237,246,.68)}
-    .tip code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size:11px;
-      padding:2px 6px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color:rgba(231,237,246,.86);
-    }
-    pre{
-      margin:0;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size:11.5px;
-      line-height:1.5;
-      color: rgba(231,237,246,.88);
-      white-space:pre-wrap;
-    }
-    .ok{color:rgba(120,255,200,.9)}
-    .info{color:rgba(67,213,255,.92)}
-    .warn{color:rgba(255,215,120,.92)}
-
-    /* sections */
-    .section{margin-top:18px}
-    .sectionHead{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
-      margin:18px 6px 10px;
-    }
-    .sectionHead h2{margin:0; font-size:16px; letter-spacing:.2px}
-    .sectionHead small{color:rgba(231,237,246,.62); font-size:11px}
-
-    /* ===== Brand slider (FIX: show full image, no crop) ===== */
-    .slider{
-      display:flex;
-      gap:14px;
-      overflow:auto;
-      scroll-snap-type:x mandatory;
-      padding: 8px 6px 14px;
-    }
-    .slider::-webkit-scrollbar{height:10px}
-    .slider::-webkit-scrollbar-thumb{
-      background: rgba(255,255,255,.12);
-      border-radius:999px;
-    }
-
-    .slide{
-      flex: 0 0 78%;
-      max-width: 78%;
-      scroll-snap-align: start;
-    }
-    @media (min-width: 860px){
-      .slide{flex:0 0 52%; max-width:52%;}
-    }
-
-    .brandCard{
+    .consoleHead small{color:var(--muted2)}
+    .consoleBody{
       padding:12px;
-      border-radius: var(--radius2);
+      font-family: var(--mono);
+      font-size:12px;
+      line-height:1.45;
+      color: rgba(255,255,255,.85);
+    }
+    .consoleBody .k{color: rgba(0,240,255,.92)}
+    .consoleBody .m{color: rgba(255,255,255,.7)}
+    .consoleBody .ok{color: rgba(110,255,180,.88)}
+
+    .section{
+      margin-top:22px;
+    }
+    .sectionTitle{
+      display:flex; justify-content:space-between; align-items:baseline;
+      gap:10px;
+      margin:0 0 10px 0;
+    }
+    .sectionTitle h3{margin:0; font-size:14px; letter-spacing:.3px}
+    .sectionTitle small{color:var(--muted2)}
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 720px){
+      .grid2{grid-template-columns:1fr}
     }
 
-    /* الصورة داخل إطار ثابت + contain */
-    .brandPreview{
-      width:100%;
+    .card{
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      box-shadow: 0 12px 28px rgba(0,0,0,.35);
+      overflow:hidden;
+      position:relative;
+    }
+
+    /* ====== BRAND ASSET (IMPORTANT) ======
+       "No crop" + image always FULLY visible
+    */
+    .assetFrame{
       border-radius: 18px;
+      margin:12px;
+      background: radial-gradient(800px 240px at 20% 20%, rgba(0,240,255,.10), transparent 58%),
+                  rgba(0,0,0,.18);
       border:1px solid rgba(255,255,255,.10);
-      background: radial-gradient(circle at 40% 20%, rgba(67,213,255,.10), rgba(0,0,0,.35));
-      box-shadow: 0 0 0 1px rgba(67,213,255,.10), 0 0 40px rgba(67,213,255,.10);
       overflow:hidden;
 
-      /* ارتفاع كبير عشان يبين الاسم والرأس */
-      height: 260px;
+      /* ثابت عشان ما يختفي على الموبايل */
+      aspect-ratio: 16 / 9;
+      min-height: 190px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
-    @media (min-width: 500px){
-      .brandPreview{height: 300px;}
-    }
-    @media (min-width: 860px){
-      .brandPreview{height: 340px;}
-    }
-
-    .brandPreview img{
+    .assetFrame img{
       width:100%;
       height:100%;
       display:block;
 
-      /* هذا أهم سطرين: منع القص */
+      /* الحل الأساسي: لا قص */
       object-fit: contain;
-      object-position: center;
 
-      /* إذا الصورة فيها فراغات، خليها محترمة */
+      /* فراغ بسيط حوالين الصورة */
       padding: 10px;
-      filter: drop-shadow(0 10px 24px rgba(0,0,0,.45));
+
+      /* تحسين وضوح */
+      image-rendering: auto;
+      filter: drop-shadow(0 0 22px rgba(0,240,255,.12));
     }
 
-    .brandMeta{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
-      margin-top:10px;
+    .assetMeta{
+      padding: 0 12px 12px 12px;
+      display:flex; justify-content:space-between; gap:10px; align-items:flex-end;
     }
-    .brandMeta b{display:block; font-size:12.5px}
-    .brandMeta span{display:block; font-size:11px; color:rgba(231,237,246,.65); margin-top:2px}
-
-    /* feature cards */
-    .grid3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:12px;
-      padding: 0 6px;
-    }
-    @media (max-width: 900px){ .grid3{grid-template-columns:1fr} }
-
-    .miniCard{
-      padding:12px;
-      border-radius: var(--radius2);
-      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.05));
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: 0 0 0 1px rgba(67,213,255,.06);
-    }
-    .miniCard b{display:block; font-size:13px; margin-bottom:4px}
-    .miniCard p{margin:0; color:rgba(231,237,246,.68); font-size:12px; line-height:1.45}
-
-    /* tools list */
-    .toolList{padding: 0 6px}
-    .toolItem{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding:12px;
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      box-shadow: 0 0 0 1px rgba(67,213,255,.05);
-      margin-bottom:10px;
-    }
-    .toolItem b{display:block; font-size:13px}
-    .toolItem span{display:block; font-size:11.5px; color:rgba(231,237,246,.68); margin-top:2px}
+    .assetMeta .txt b{display:block; font-size:12px; margin-bottom:3px}
+    .assetMeta .txt span{display:block; font-size:12px; color:var(--muted2)}
     .pill{
-      font-size:11px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(67,213,255,.28);
-      background: rgba(67,213,255,.08);
-      color: rgba(231,237,246,.92);
+      font-size:11px; font-weight:800;
+      padding:7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(0,240,255,.22);
+      background: rgba(0,240,255,.08);
+      color: rgba(255,255,255,.85);
       white-space:nowrap;
     }
 
-    /* roadmap */
-    .road{padding:14px}
-    ul{margin:10px 0 0 18px; padding:0; color:rgba(231,237,246,.75); font-size:12px; line-height:1.6}
+    .warn{
+      width:100%;
+      height:100%;
+      padding:14px;
+      font-family: var(--mono);
+      font-size:12px;
+      line-height:1.4;
+      color: rgba(255,210,120,.92);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
 
-    .footActions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
-    .muted{color:rgba(231,237,246,.65)}
+    .toolList{display:grid; gap:10px}
+    .toolItem{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:12px;
+      padding:12px 14px;
+      border-radius: 18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+    }
+    .toolItem b{display:block; font-size:13px; margin-bottom:2px}
+    .toolItem span{display:block; font-size:12px; color:var(--muted2); line-height:1.35}
+    .tag{
+      font-size:11px; font-weight:900;
+      padding:7px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.82);
+      white-space:nowrap;
+    }
+
+    .footerRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:12px;
+    }
+
+    .mutedNote{
+      color: var(--muted2);
+      font-size:12px;
+      line-height:1.35;
+    }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="topbar">
+  <div class="topbar">
+    <div class="topbar-inner">
       <div class="brand">
-        <div class="logoDot">DIQ</div>
-        <div class="brandText">
-          <b>DefendIQOps</b>
-          <span>Defensive-first security</span>
+        <div class="logo" aria-hidden="true"><span>DIQ</span></div>
+        <div style="min-width:0">
+          <h1>DefendIQOps</h1>
+          <p>Defensive-first security</p>
         </div>
       </div>
-      <button class="menuBtn" type="button" aria-label="Menu" onclick="scrollToSection('tools')">☰</button>
+      <button class="menuBtn" type="button" aria-label="Menu">
+        <div class="menuDots"><i></i></div>
+      </button>
     </div>
+  </div>
 
-    <section class="glass hero" id="home">
+  <main class="wrap">
+    <section class="hero" id="top">
       <div class="heroGrid">
         <div>
-          <h1>DefendIQOps</h1>
-          <p class="sub">
+          <h2>DefendIQOps</h2>
+          <p>
             Defensive-first cybersecurity tools. No exploitation. No abuse. Only protection.
             Built to help you validate, monitor, and harden systems—clean, simple, and safe-by-design.
           </p>
 
-          <div class="actions">
-            <button class="btn primary" onclick="scrollToSection('tools')">Explore Tools</button>
-            <button class="btn" onclick="scrollToSection('brand')">View Brand Assets</button>
-            <button class="btn" onclick="scrollToSection('roadmap')">What's Next</button>
+          <div class="btnRow">
+            <a class="btn primary" href="#tools">Explore Tools</a>
+            <a class="btn" href="#brand">View Brand Assets</a>
+            <a class="btn" href="#roadmap">What’s Next</a>
           </div>
 
-          <div class="section" style="margin-top:14px">
-            <div class="console" role="region" aria-label="console">
-              <div class="consoleHead">
-                <div class="dots" aria-hidden="true">
-                  <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
-                </div>
-                <div class="tip">tip: press <code>Tools</code></div>
+          <div class="console" aria-label="Console">
+            <div class="consoleHead">
+              <div class="dots" aria-hidden="true">
+                <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
               </div>
-              <pre>
-<span class="info">[INFO]</span> Defensive scan initialized
-<span class="ok">[OK]</span> No exploitation performed
-<span class="warn">[STATUS]</span> Secure-by-design UI loaded
-<span class="ok">[READY]</span> Brand assets path: <span class="muted">assets/img/</span>
-              </pre>
+              <small>tip: press <span class="k">Tools</span></small>
+            </div>
+            <div class="consoleBody">
+              <div><span class="m">[INFO]</span> Defensive scan initialized</div>
+              <div><span class="ok">[OK]</span> No exploitation performed</div>
+              <div><span class="m">[STATUS]</span> Secure-by-design UI loaded</div>
+              <div><span class="m">[READY]</span> Brand assets path: <span class="k">assets/img/</span></div>
             </div>
           </div>
         </div>
 
-        <div class="grid3" style="padding:0">
-          <div class="miniCard">
+        <div class="chips">
+          <div class="chip">
             <b>Glass UI</b>
-            <p>cyan glow theme</p>
+            <span>cyan glow theme</span>
           </div>
-          <div class="miniCard">
+          <div class="chip">
             <b>Defensive Only</b>
-            <p>no abuse, no exploit</p>
+            <span>no abuse, no exploit</span>
           </div>
-          <div class="miniCard">
+          <div class="chip">
             <b>Mobile Ready</b>
-            <p>clean responsive layout</p>
+            <span>clean responsive layout</span>
           </div>
         </div>
       </div>
     </section>
 
     <section class="section" id="brand">
-      <div class="sectionHead">
-        <h2>Brand Assets</h2>
-        <small>Big previews + no crop (full image visible)</small>
+      <div class="sectionTitle">
+        <h3>Brand Assets</h3>
+        <small>Big previews • no crop (full image visible)</small>
       </div>
 
-      <div class="slider">
-        <article class="slide glass brandCard">
-          <div class="brandPreview">
-            <!-- بدّل اسم الملف إذا مختلف -->
-            <img src="assets/img/brand-primary.png" alt="DefendIQOps Primary Identity" loading="lazy">
+      <div class="grid2">
+        <!-- Primary -->
+        <article class="card">
+          <div class="assetFrame" id="framePrimary">
+            <img id="imgPrimary" alt="DefendIQOps Primary Identity" loading="lazy" />
           </div>
-          <div class="brandMeta">
-            <div>
-              <b>Primary Identity</b>
+          <div class="assetMeta">
+            <div class="txt">
+              <b>DefendIQOps Primary Identity</b>
               <span>Main visual with cyan security glow.</span>
             </div>
             <div class="pill">Full image</div>
           </div>
         </article>
 
-        <article class="slide glass brandCard">
-          <div class="brandPreview">
-            <!-- بدّل اسم الملف إذا مختلف -->
-            <img src="assets/img/brand-alt.png" alt="DefendIQOps Alternate Mark" loading="lazy">
+        <!-- Alternate -->
+        <article class="card">
+          <div class="assetFrame" id="frameAlt">
+            <img id="imgAlt" alt="DefendIQOps Alternate Mark" loading="lazy" />
           </div>
-          <div class="brandMeta">
-            <div>
-              <b>Alternate Mark</b>
+          <div class="assetMeta">
+            <div class="txt">
+              <b>DefendIQOps Alternate Mark</b>
               <span>Secondary logo for branding & tools.</span>
             </div>
-            <div class="pill">No cropping</div>
+            <div class="pill">No crop</div>
           </div>
         </article>
       </div>
+
+      <p class="mutedNote" style="margin:10px 2px 0 2px">
+        If an image doesn’t load, it will show a warning with the exact path GitHub Pages tried to load.
+      </p>
     </section>
 
     <section class="section" id="tools">
-      <div class="sectionHead">
-        <h2>Tools Hub</h2>
-        <small>defensive + safe-by-design</small>
+      <div class="sectionTitle">
+        <h3>Tools Hub</h3>
+        <small>defensive • safe-by-design</small>
       </div>
 
       <div class="toolList">
         <div class="toolItem">
           <div>
             <b>Phishing Checker</b>
-            <span>Analyze suspicious messages safely and highlight red flags without sending data to attackers.</span>
+            <span>Analyze suspicious messages safely and highlight red flags without sending data anywhere.</span>
           </div>
-          <div class="pill">Defensive</div>
+          <div class="tag">Defensive</div>
         </div>
 
         <div class="toolItem">
           <div>
             <b>URL Reputation</b>
-            <span>Local checks + policy-based warning. No intrusive scraping, no exploitation behaviors.</span>
+            <span>Local checks + policy-based warnings. No intrusive scraping, no exploitation behaviors.</span>
           </div>
-          <div class="pill">Safe-by-design</div>
+          <div class="tag">Safe-by-design</div>
         </div>
 
         <div class="toolItem">
           <div>
             <b>Harden Checklist</b>
-            <span>Step-by-step security baseline for small businesses—clean, actionable, and easy to follow.</span>
+            <span>Step-by-step security baseline for small businesses—clean, actionable, easy to follow.</span>
           </div>
-          <div class="pill">Ops</div>
+          <div class="tag">Ops</div>
         </div>
       </div>
     </section>
 
     <section class="section" id="roadmap">
-      <div class="sectionHead">
-        <h2>Roadmap</h2>
-        <small class="muted">نسخة البداية جاهزة وبنكمّل بشكل مرتب</small>
+      <div class="sectionTitle">
+        <h3>Roadmap</h3>
+        <small>Next upgrades</small>
       </div>
 
-      <div class="glass road">
-        <b>Next upgrades</b>
-        <ul>
+      <article class="card" style="padding:14px 16px">
+        <ul style="margin:0; padding-left:18px; color:rgba(255,255,255,.78); font-size:13px; line-height:1.5">
           <li>Add real tool pages (each tool gets its own section/page)</li>
           <li>Add “Docs” area + screenshots</li>
           <li>Add download links for defensive utilities (only safe tools)</li>
           <li>Add light animations on scroll (optional)</li>
         </ul>
 
-        <div class="footActions">
-          <a class="btn primary" href="https://github.com/defendiqops/defendiqops.github.io" target="_blank" rel="noreferrer">Open GitHub</a>
-          <button class="btn" onclick="scrollToSection('home')">Back to top</button>
+        <div class="footerRow">
+          <a class="btn primary" href="https://github.com/defendiqops" target="_blank" rel="noopener">Open GitHub</a>
+          <a class="btn" href="#top">Back to top</a>
         </div>
-      </div>
+      </article>
     </section>
-  </div>
+  </main>
 
   <script>
-    function scrollToSection(id){
-      const el = document.getElementById(id);
-      if(!el) return;
-      el.scrollIntoView({behavior:'smooth', block:'start'});
+    /* =========================
+       EDIT ONLY THESE 2 LINES:
+       حط اسماء صورك EXACT (case-sensitive) داخل assets/img/
+    ========================== */
+    const PRIMARY_IMAGE = "assets/img/logo.png";
+    const ALT_IMAGE     = "assets/img/logo2.png";
+
+    const imgPrimary = document.getElementById("imgPrimary");
+    const imgAlt = document.getElementById("imgAlt");
+
+    function setWithFallback(imgEl, src) {
+      imgEl.src = src;
+
+      imgEl.onerror = () => {
+        const frame = imgEl.parentElement;
+        frame.innerHTML = `<div class="warn">
+          Image not found.<br><br>
+          Check path & filename (case-sensitive):<br>
+          <span style="color:rgba(255,255,255,.86)">${src}</span>
+        </div>`;
+      };
     }
+
+    setWithFallback(imgPrimary, PRIMARY_IMAGE);
+    setWithFallback(imgAlt, ALT_IMAGE);
   </script>
 </body>
 </html>
