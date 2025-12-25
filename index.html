@@ -1,598 +1,245 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#061018" />
-  <title>DefendIQOps</title>
-  <meta name="description" content="DefendIQOps — Security. Verified. Defensive. A defensive-first toolkit and services hub." />
+  <title>DefendIQOps — Practical Defensive Cybersecurity Tools</title>
+  <meta name="description" content="DefendIQOps builds practical, defensive-first cybersecurity tools with safe defaults, clear docs, and reproducible outputs." />
 
-  <style>
-    :root{
-      --bg0:#050b12;
-      --bg1:#071522;
-      --glass: rgba(255,255,255,.08);
-      --glass2: rgba(255,255,255,.12);
-      --stroke: rgba(255,255,255,.14);
-      --text:#eaf3ff;
-      --muted: rgba(234,243,255,.75);
-      --muted2: rgba(234,243,255,.55);
-      --brand:#7fe7ff;
-      --brand2:#46b7ff;
-      --ok:#4dffb8;
-      --warn:#ffd66b;
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-      --radius: 22px;
-      --radius2: 28px;
-    }
+  <!-- Performance -->
+  <link rel="preload" as="image" href="assets/img/logo.png" />
+  <link rel="preload" as="image" href="assets/img/logo2.png" />
 
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color: var(--text);
-      background:
-        radial-gradient(1200px 600px at 20% 10%, rgba(127,231,255,.16), transparent 55%),
-        radial-gradient(900px 500px at 80% 25%, rgba(70,183,255,.12), transparent 60%),
-        radial-gradient(800px 500px at 45% 85%, rgba(77,255,184,.10), transparent 55%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x:hidden;
-    }
-
-    a{ color: inherit; text-decoration:none; }
-    .container{ width:min(1120px, 92vw); margin:0 auto; }
-
-    /* Background ornaments */
-    .grid{
-      position:fixed;
-      inset:-20vh -20vw;
-      background-image:
-        linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
-      background-size: 46px 46px;
-      mask-image: radial-gradient(circle at 50% 35%, rgba(0,0,0,.9), transparent 72%);
-      opacity:.18;
-      pointer-events:none;
-      z-index:-2;
-    }
-    .noise{
-      position:fixed; inset:0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-      opacity:.06;
-      mix-blend-mode: overlay;
-      pointer-events:none;
-      z-index:-1;
-    }
-
-    /* Glass helpers */
-    .glass{
-      background: linear-gradient(180deg, var(--glass), rgba(255,255,255,.05));
-      border: 1px solid var(--stroke);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-radius: var(--radius2);
-    }
-
-    /* Header */
-    header{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      background: rgba(6,16,24,.55);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-    .nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:14px 0;
-      gap:16px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:800; letter-spacing:.4px;
-    }
-    .brand-dot{
-      width:10px; height:10px; border-radius:999px;
-      background: radial-gradient(circle at 30% 30%, #fff, var(--brand));
-      box-shadow: 0 0 18px rgba(127,231,255,.6);
-    }
-    nav a{
-      padding:10px 12px;
-      color: var(--muted);
-      border-radius: 14px;
-      transition: transform .18s ease, background .18s ease, color .18s ease;
-    }
-    nav a:hover{
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      transform: translateY(-1px);
-    }
-    .nav-cta{
-      display:flex; gap:10px; align-items:center;
-    }
-
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:10px;
-      padding:12px 14px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.08);
-      color: var(--text);
-      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
-      cursor:pointer;
-      user-select:none;
-      white-space:nowrap;
-    }
-    .btn:hover{
-      transform: translateY(-2px);
-      border-color: rgba(127,231,255,.35);
-      box-shadow: 0 16px 40px rgba(0,0,0,.45);
-      background: rgba(255,255,255,.10);
-    }
-    .btn.primary{
-      border-color: rgba(127,231,255,.40);
-      background: linear-gradient(180deg, rgba(127,231,255,.22), rgba(70,183,255,.12));
-      box-shadow: 0 16px 50px rgba(70,183,255,.18);
-    }
-
-    /* Hero */
-    .hero{
-      padding: 36px 0 18px;
-    }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:18px;
-      align-items:stretch;
-    }
-    @media (max-width: 900px){
-      .hero-grid{ grid-template-columns:1fr; }
-      nav{ display:none; }
-    }
-
-    .hero-card{
-      padding: 28px;
-      position:relative;
-      overflow:hidden;
-      border-radius: var(--radius2);
-    }
-    .hero-card:before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(500px 240px at 20% 0%, rgba(127,231,255,.28), transparent 60%),
-        radial-gradient(520px 240px at 80% 10%, rgba(77,255,184,.18), transparent 60%);
-      opacity:.9;
-      filter: blur(0px);
-      pointer-events:none;
-    }
-    .hero-inner{ position:relative; z-index:1; }
-
-    .kicker{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 12px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.07);
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .k-badge{
-      width: 10px; height:10px; border-radius: 999px;
-      background: var(--ok);
-      box-shadow: 0 0 16px rgba(77,255,184,.55);
-    }
-    h1{
-      margin: 14px 0 10px;
-      font-size: clamp(28px, 3.3vw, 44px);
-      line-height: 1.08;
-      letter-spacing: -0.6px;
-    }
-    .lead{
-      margin:0 0 18px;
-      color: var(--muted);
-      font-size: 15.5px;
-      line-height: 1.6;
-      max-width: 64ch;
-    }
-    .hero-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 8px; }
-    .meta-row{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-top: 18px;
-      color: var(--muted2);
-      font-size: 13px;
-    }
-    .meta-pill{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:10px 12px;
-      border-radius: 16px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      transition: transform .18s ease, background .18s ease, border-color .18s ease;
-    }
-    .meta-pill:hover{
-      transform: translateY(-2px);
-      background: rgba(255,255,255,.08);
-      border-color: rgba(127,231,255,.30);
-    }
-    .dot{
-      width:8px; height:8px; border-radius:999px;
-      background: var(--brand);
-      box-shadow: 0 0 14px rgba(127,231,255,.55);
-    }
-
-    /* Slider card */
-    .slider{
-      padding: 18px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      border-radius: var(--radius2);
-      overflow:hidden;
-    }
-    .slider-top{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-    }
-    .slider-title{
-      font-weight:800;
-      letter-spacing:.3px;
-    }
-    .slider-sub{ color: var(--muted2); font-size: 13px; }
-    .slider-stage{
-      position:relative;
-      border-radius: 22px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-      overflow:hidden;
-      min-height: 260px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      box-shadow: 0 18px 50px rgba(0,0,0,.45);
-    }
-    .slide-img{
-      width: 92%;
-      max-width: 420px;
-      height: auto;
-      filter: drop-shadow(0 18px 40px rgba(0,0,0,.55));
-      transform: translateZ(0);
-      opacity:0;
-      transition: opacity .55s ease, transform .55s ease;
-      position:absolute;
-      will-change: opacity, transform;
-    }
-    .slide-img.active{
-      opacity:1;
-      transform: scale(1.02);
-    }
-    .slider-dots{
-      display:flex; gap:8px; justify-content:center; padding-bottom: 6px;
-    }
-    .s-dot{
-      width: 7px; height:7px; border-radius:999px;
-      background: rgba(255,255,255,.22);
-      border:1px solid rgba(255,255,255,.12);
-      transition: transform .2s ease, background .2s ease, border-color .2s ease;
-    }
-    .s-dot.active{
-      background: rgba(127,231,255,.75);
-      border-color: rgba(127,231,255,.55);
-      transform: scale(1.25);
-    }
-
-    /* Sections */
-    section{ padding: 18px 0; }
-    .section-head{
-      display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
-      margin: 8px 0 12px;
-    }
-    .section-head h2{
-      margin:0;
-      font-size: 20px;
-      letter-spacing: -.2px;
-    }
-    .section-head p{ margin:0; color: var(--muted2); font-size: 13px; max-width: 70ch; }
-
-    .cards{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    @media (max-width: 900px){
-      .cards{ grid-template-columns:1fr; }
-    }
-
-    .card{
-      padding: 18px;
-      border-radius: var(--radius);
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
-      position:relative;
-      overflow:hidden;
-    }
-    .card:hover{
-      transform: translateY(-3px);
-      border-color: rgba(127,231,255,.30);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
-    }
-    .card h3{ margin: 8px 0 8px; font-size: 16px; }
-    .card p{ margin:0; color: var(--muted); font-size: 13.5px; line-height: 1.55; }
-    .icon{
-      width: 38px; height: 38px; border-radius: 14px;
-      display:grid; place-items:center;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.07);
-      box-shadow: 0 12px 30px rgba(0,0,0,.35);
-    }
-
-    /* CTA strip */
-    .cta{
-      padding: 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 14px;
-      flex-wrap:wrap;
-    }
-    .cta strong{ font-size: 15px; }
-    .cta small{ color: var(--muted2); display:block; margin-top:4px; }
-
-    footer{
-      padding: 22px 0 32px;
-      color: var(--muted2);
-      font-size: 13px;
-    }
-    .footer-grid{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      flex-wrap:wrap;
-      border-top: 1px solid rgba(255,255,255,.08);
-      padding-top: 16px;
-    }
-  </style>
+  <!-- Styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
-  <div class="grid" aria-hidden="true"></div>
-  <div class="noise" aria-hidden="true"></div>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <header>
-    <div class="container">
-      <div class="nav">
-        <a class="brand" href="#top" aria-label="DefendIQOps Home">
-          <span class="brand-dot" aria-hidden="true"></span>
-          <span>DefendIQOps</span>
-        </a>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#top" aria-label="DefendIQOps Home">
+        <img class="brand-logo" src="assets/img/logo.png" alt="DefendIQOps logo" width="40" height="40" />
+        <span class="brand-name">DefendIQOps</span>
+      </a>
 
-        <nav aria-label="Primary">
-          <a href="#services">Services</a>
-          <a href="#toolkit">Toolkit</a>
-          <a href="#trust">Why Us</a>
-          <a href="#contact">Contact</a>
-        </nav>
-
-        <div class="nav-cta">
-          <a class="btn" href="#toolkit">Explore</a>
-          <a class="btn primary" href="#contact">Get a Quote</a>
-        </div>
-      </div>
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="nav-link" href="#tools">Tools</a>
+        <a class="nav-link" href="#roadmap">Roadmap</a>
+        <a class="nav-link" href="#contribute">Contribute</a>
+        <a class="nav-link nav-cta" href="#get-started">Get Started</a>
+      </nav>
     </div>
   </header>
 
-  <main id="top" class="container">
-    <section class="hero">
-      <div class="hero-grid">
-        <div class="hero-card glass">
-          <div class="hero-inner">
-            <div class="kicker">
-              <span class="k-badge" aria-hidden="true"></span>
-              Defensive-first security utilities & services
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <p class="pill">Defensive-first • Authorized use only</p>
+
+          <h1 class="hero-title">
+            Practical security tools that help you
+            <span class="glow">verify</span>, <span class="glow">monitor</span>, and <span class="glow">respond</span>.
+          </h1>
+
+          <p class="hero-sub">
+            A lightweight hub of focused scanners, analyzers, and blue-team utilities—built with safe defaults,
+            clear docs, and reproducible outputs.
+          </p>
+
+          <div class="hero-actions" id="get-started">
+            <a class="btn btn-primary" href="#tools">Explore Tools</a>
+            <a class="btn btn-ghost" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">View GitHub</a>
+          </div>
+
+          <div class="hero-trust">
+            <div class="trust-item">
+              <span class="trust-kpi">Safe</span>
+              <span class="trust-label">No exploitation</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-kpi">Clear</span>
+              <span class="trust-label">Readable output</span>
+            </div>
+            <div class="trust-item">
+              <span class="trust-kpi">Fast</span>
+              <span class="trust-label">Minimal deps</span>
+            </div>
+          </div>
+
+          <p class="hero-note">
+            We build for blue teams: validation, hardening checks, and incident triage — nothing offensive.
+          </p>
+        </div>
+
+        <div class="hero-media" aria-label="Showcase slider">
+          <div class="media-card">
+            <div class="media-top">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="media-title">Showcase</span>
             </div>
 
-            <h1>Protect your site & workflow — fast, clean, defensive.</h1>
-            <p class="lead">
-              DefendIQOps helps you validate security posture, spot risky configurations,
-              and ship safer systems with a practical, business-friendly approach.
+            <!-- ✅ السلايدين فقط: لا تغيّر الاسم ولا المسار -->
+            <div class="slider">
+              <img
+                id="heroSlide"
+                class="slide-img"
+                src="assets/img/logo.png"
+                alt="DefendIQOps showcase"
+                width="900"
+                height="900"
+                decoding="async"
+              />
+              <div class="slider-glow" aria-hidden="true"></div>
+            </div>
+
+            <div class="media-bottom">
+              <span class="badge">Defensive</span>
+              <span class="badge">Verified</span>
+              <span class="badge">Practical</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-orbs" aria-hidden="true">
+        <span class="orb orb-1"></span>
+        <span class="orb orb-2"></span>
+        <span class="orb orb-3"></span>
+      </div>
+    </section>
+
+    <!-- TOOLS -->
+    <section class="section" id="tools">
+      <div class="container">
+        <div class="section-head">
+          <h2>Tool Categories</h2>
+          <p>Start small. Ship often. Keep it useful.</p>
+        </div>
+
+        <div class="grid cards">
+          <article class="card">
+            <h3>Scanners & Validators</h3>
+            <p>Safe checks for common mistakes: headers, TLS posture, baseline config sanity—no exploitation.</p>
+            <ul class="list">
+              <li>HTTP header checks</li>
+              <li>TLS posture overview</li>
+              <li>Best-practice baselines</li>
+            </ul>
+            <a class="card-link" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">See repos →</a>
+          </article>
+
+          <article class="card">
+            <h3>Analyzers</h3>
+            <p>Turn raw data into signal: logs, URLs, hashes, artifacts—optimized for triage and clarity.</p>
+            <ul class="list">
+              <li>Log summarizers</li>
+              <li>IOC normalization</li>
+              <li>Read-only inspectors</li>
+            </ul>
+            <a class="card-link" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">See repos →</a>
+          </article>
+
+          <article class="card">
+            <h3>Blue Team Utilities</h3>
+            <p>SOC/DFIR helpers that save time: templates, checklists, and workflows you can reuse.</p>
+            <ul class="list">
+              <li>Triage checklists</li>
+              <li>Report templates</li>
+              <li>Hygiene helpers</li>
+            </ul>
+            <a class="card-link" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">See repos →</a>
+          </article>
+        </div>
+
+        <div class="callout">
+          <div>
+            <h3>Commercial-ready structure</h3>
+            <p>
+              People trust: <strong>clear value</strong>, <strong>safe promise</strong>, and <strong>one obvious CTA</strong>.
+              هذا اللي ركزنا عليه بالهيرو والكروت والهوفر.
             </p>
+          </div>
+          <a class="btn btn-primary" href="#contribute">Suggest a Tool</a>
+        </div>
+      </div>
+    </section>
 
-            <div class="hero-actions">
-              <a class="btn primary" href="#contact">Request Assessment</a>
-              <a class="btn" href="#toolkit">View Tools</a>
-            </div>
+    <!-- ROADMAP -->
+    <section class="section" id="roadmap">
+      <div class="container">
+        <div class="section-head">
+          <h2>Roadmap</h2>
+          <p>Clear steps, no fluff.</p>
+        </div>
 
-            <div class="meta-row">
-              <span class="meta-pill"><span class="dot" aria-hidden="true"></span> Fast setup</span>
-              <span class="meta-pill"><span class="dot" aria-hidden="true"></span> Clear reports</span>
-              <span class="meta-pill"><span class="dot" aria-hidden="true"></span> Defensive only</span>
-            </div>
+        <div class="timeline">
+          <div class="step">
+            <div class="step-tag">Phase 1</div>
+            <h3>Launch the first tool</h3>
+            <p>One focused repo with clean README, examples, and a safe disclaimer.</p>
+          </div>
+          <div class="step">
+            <div class="step-tag">Phase 2</div>
+            <h3>Build a consistent standard</h3>
+            <p>Same structure across tools: install, usage, output, limitations, tests (where possible).</p>
+          </div>
+          <div class="step">
+            <div class="step-tag">Phase 3</div>
+            <h3>Community-friendly growth</h3>
+            <p>Issue templates, contribution guide, and simple releases—easy for others to help.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTRIBUTING -->
+    <section class="section" id="contribute">
+      <div class="container">
+        <div class="section-head">
+          <h2>Contribute</h2>
+          <p>PRs are welcome — keep it clean and defensive.</p>
+        </div>
+
+        <div class="grid split">
+          <div class="panel">
+            <h3>Propose a tool idea</h3>
+            <p>Open an issue with the problem, expected input/output, and safe sample data (if needed).</p>
+            <a class="btn btn-ghost" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">Open an issue</a>
+          </div>
+
+          <div class="panel">
+            <h3>Send a PR</h3>
+            <p>Small PRs are best: one improvement, one fix, or one feature with docs.</p>
+            <a class="btn btn-ghost" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">Create a PR</a>
           </div>
         </div>
 
-        <!-- SLIDER: uses ONLY your two images with the SAME paths -->
-        <aside class="slider glass" aria-label="Brand slider">
-          <div class="slider-top">
-            <div>
-              <div class="slider-title">Brand Preview</div>
-              <div class="slider-sub">Auto-switching between two logos</div>
-            </div>
-            <button class="btn" id="toggleSlide" type="button" aria-pressed="true" title="Pause / Play">
-              Pause
-            </button>
-          </div>
-
-          <div class="slider-stage" role="group" aria-label="Logo slideshow">
-            <img class="slide-img active" id="slide1" src="assets/img/logo.png" alt="DefendIQOps logo variation 1" />
-            <img class="slide-img" id="slide2" src="assets/img/logo2.png" alt="DefendIQOps logo variation 2" />
-          </div>
-
-          <div class="slider-dots" aria-label="Slide indicators">
-            <span class="s-dot active" id="dot1" aria-hidden="true"></span>
-            <span class="s-dot" id="dot2" aria-hidden="true"></span>
-          </div>
-        </aside>
-      </div>
-    </section>
-
-    <section id="services">
-      <div class="section-head">
-        <div>
-          <h2>Services that build trust</h2>
-          <p>People pick sites that look reliable, clear, and “safe”. So we focus on clarity, proof, and smooth UX.</p>
-        </div>
-      </div>
-
-      <div class="cards">
-        <div class="card glass">
-          <div class="icon" aria-hidden="true">🛡️</div>
-          <h3>Defensive Security Review</h3>
-          <p>Configuration checks, best-practice hardening, and risk prioritization — no offensive actions.</p>
-        </div>
-        <div class="card glass">
-          <div class="icon" aria-hidden="true">📄</div>
-          <h3>Readable Reports</h3>
-          <p>Non-technical summary + technical appendix, so decision-makers understand what matters.</p>
-        </div>
-        <div class="card glass">
-          <div class="icon" aria-hidden="true">⚙️</div>
-          <h3>Practical Remediation</h3>
-          <p>Step-by-step fixes and validation, aimed at shipping improvements quickly with minimal disruption.</p>
+        <div class="disclaimer">
+          <strong>Safety & Ethics:</strong> Tools are built for authorized defensive security and education only.
+          Do not use them against systems you don’t own or don’t have explicit permission to test.
         </div>
       </div>
     </section>
-
-    <section id="toolkit">
-      <div class="section-head">
-        <div>
-          <h2>Toolkit (clean & commercial)</h2>
-          <p>Short list, clear value, and quick CTA — this is what converts better than long walls of text.</p>
-        </div>
-      </div>
-
-      <div class="cards">
-        <div class="card glass">
-          <div class="icon" aria-hidden="true">🔍</div>
-          <h3>Phishing Message Check</h3>
-          <p>Spot suspicious patterns, domain tricks, and risky links with easy-to-read scoring.</p>
-        </div>
-        <div class="card glass">
-          <div class="icon" aria-hidden="true">🧩</div>
-          <h3>Header & TLS Validation</h3>
-          <p>Quick checks for security headers, HTTPS posture, and common misconfigurations.</p>
-        </div>
-        <div class="card glass">
-          <div class="icon" aria-hidden="true">📦</div>
-          <h3>Asset Integrity</h3>
-          <p>Track changes in files and configs, and detect unexpected modifications early.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="trust">
-      <div class="section-head">
-        <div>
-          <h2>Why this style works (بدون فلسفة زايدة)</h2>
-          <p>Commercial sites win when: value is clear in 5 seconds, buttons are obvious, and layout feels “premium”.</p>
-        </div>
-      </div>
-
-      <div class="cta glass">
-        <div>
-          <strong>Want it even smoother?</strong>
-          <small>I can add a “Pricing” block + FAQ + a simple contact form (front-end) next.</small>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="btn" href="#services">See Services</a>
-          <a class="btn primary" href="#contact">Contact Now</a>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="section-head">
-        <div>
-          <h2>Contact</h2>
-          <p>Keep it simple: one CTA, one path. This reduces drop-off.</p>
-        </div>
-      </div>
-
-      <div class="card glass" style="padding:20px;">
-        <p style="margin:0; color:var(--muted); line-height:1.7;">
-          Email: <strong style="color:var(--text);">S3killer7772@gmail.com</strong><br/>
-          Brand: <strong style="color:var(--text);">DefendIQOps</strong><br/>
-          Tagline: <strong style="color:var(--text);">Security. Verified. Defensive.</strong>
-        </p>
-      </div>
-    </section>
-
-    <footer>
-      <div class="footer-grid">
-        <span>© <span id="year"></span> DefendIQOps. All rights reserved.</span>
-        <span>Built with a defensive-first mindset.</span>
-      </div>
-    </footer>
   </main>
 
-  <script>
-    // Year
-    document.getElementById("year").textContent = new Date().getFullYear();
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <span class="footer-brand">DefendIQOps</span>
+        <span class="footer-sub">Build. Verify. Defend.</span>
+      </div>
+      <div class="footer-right">
+        <a class="footer-link" href="#top">Back to top ↑</a>
+        <a class="footer-link" href="https://github.com/DefendIQOps" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
 
-    // Slider (ONLY two images, and your exact paths are used in the HTML)
-    const slide1 = document.getElementById("slide1");
-    const slide2 = document.getElementById("slide2");
-    const dot1 = document.getElementById("dot1");
-    const dot2 = document.getElementById("dot2");
-    const toggleBtn = document.getElementById("toggleSlide");
-
-    let idx = 0;
-    let playing = true;
-    let timer = null;
-
-    function render(){
-      const s1 = idx === 0;
-      slide1.classList.toggle("active", s1);
-      slide2.classList.toggle("active", !s1);
-      dot1.classList.toggle("active", s1);
-      dot2.classList.toggle("active", !s1);
-    }
-
-    function next(){
-      idx = (idx + 1) % 2;
-      render();
-    }
-
-    function play(){
-      if (timer) clearInterval(timer);
-      timer = setInterval(next, 4000);
-      playing = true;
-      toggleBtn.textContent = "Pause";
-      toggleBtn.setAttribute("aria-pressed", "true");
-    }
-
-    function pause(){
-      if (timer) clearInterval(timer);
-      timer = null;
-      playing = false;
-      toggleBtn.textContent = "Play";
-      toggleBtn.setAttribute("aria-pressed", "false");
-    }
-
-    toggleBtn.addEventListener("click", () => {
-      playing ? pause() : play();
-    });
-
-    // Start
-    render();
-    play();
-  </script>
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>
