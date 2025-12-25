@@ -238,9 +238,6 @@
       position:relative;
     }
 
-    /* ====== BRAND ASSET (IMPORTANT) ======
-       "No crop" + image always FULLY visible
-    */
     .assetFrame{
       border-radius: 18px;
       margin:12px;
@@ -248,8 +245,6 @@
                   rgba(0,0,0,.18);
       border:1px solid rgba(255,255,255,.10);
       overflow:hidden;
-
-      /* ثابت عشان ما يختفي على الموبايل */
       aspect-ratio: 16 / 9;
       min-height: 190px;
       display:flex;
@@ -260,14 +255,8 @@
       width:100%;
       height:100%;
       display:block;
-
-      /* الحل الأساسي: لا قص */
       object-fit: contain;
-
-      /* فراغ بسيط حوالين الصورة */
       padding: 10px;
-
-      /* تحسين وضوح */
       image-rendering: auto;
       filter: drop-shadow(0 0 22px rgba(0,240,255,.12));
     }
@@ -310,7 +299,10 @@
       border-radius: 18px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.05);
+      cursor:pointer;
+      transition: transform .12s ease;
     }
+    .toolItem:hover{transform: translateY(-1px)}
     .toolItem b{display:block; font-size:13px; margin-bottom:2px}
     .toolItem span{display:block; font-size:12px; color:var(--muted2); line-height:1.35}
     .tag{
@@ -408,7 +400,6 @@
       </div>
 
       <div class="grid2">
-        <!-- Primary -->
         <article class="card">
           <div class="assetFrame" id="framePrimary">
             <img id="imgPrimary" alt="DefendIQOps Primary Identity" loading="lazy" />
@@ -422,7 +413,6 @@
           </div>
         </article>
 
-        <!-- Alternate -->
         <article class="card">
           <div class="assetFrame" id="frameAlt">
             <img id="imgAlt" alt="DefendIQOps Alternate Mark" loading="lazy" />
@@ -449,29 +439,31 @@
       </div>
 
       <div class="toolList">
-        <div class="toolItem">
+
+        <a class="toolItem" href="tools/phishing.html">
           <div>
             <b>Phishing Checker</b>
             <span>Analyze suspicious messages safely and highlight red flags without sending data anywhere.</span>
           </div>
           <div class="tag">Defensive</div>
-        </div>
+        </a>
 
-        <div class="toolItem">
+        <a class="toolItem" href="tools/url-reputation.html">
           <div>
             <b>URL Reputation</b>
             <span>Local checks + policy-based warnings. No intrusive scraping, no exploitation behaviors.</span>
           </div>
           <div class="tag">Safe-by-design</div>
-        </div>
+        </a>
 
-        <div class="toolItem">
+        <a class="toolItem" href="tools/harden-checklist.html">
           <div>
             <b>Harden Checklist</b>
             <span>Step-by-step security baseline for small businesses—clean, actionable, easy to follow.</span>
           </div>
           <div class="tag">Ops</div>
-        </div>
+        </a>
+
       </div>
     </section>
 
@@ -498,10 +490,6 @@
   </main>
 
   <script>
-    /* =========================
-       EDIT ONLY THESE 2 LINES:
-       حط اسماء صورك EXACT (case-sensitive) داخل assets/img/
-    ========================== */
     const PRIMARY_IMAGE = "assets/img/logo.png";
     const ALT_IMAGE     = "assets/img/logo2.png";
 
