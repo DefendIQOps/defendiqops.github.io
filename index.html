@@ -1,366 +1,226 @@
 <!doctype html>
-<html lang="en" data-lang="en">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="color-scheme" content="dark" />
-  <title>DefendIQOps — Practical Defensive Cybersecurity Tools</title>
-  <meta name="description" content="Practical, defensive-first cybersecurity utilities. Build. Verify. Defend." />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DefendIQOps</title>
 
-  <style>
-    :root{
-      /* ====== Glass theme palette (match your images easily) ====== */
-      --bg0: #070A12;
-      --bg1: #0A1022;
+<style>
+:root{
+  --cyan: #4fdcff;
+  --cyan-soft: rgba(79,220,255,.35);
+  --glass-bg: rgba(255,255,255,.06);
+  --glass-border: rgba(255,255,255,.18);
+  --text: #eafaff;
+}
 
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.68);
-      --border: rgba(255,255,255,.12);
+*{box-sizing:border-box}
 
-      /* accents (change these 3 لو بدك نفس ألوان صورك حرفيًا) */
-      --a1: #55E6FF; /* cyan */
-      --a2: #8B5CFF; /* violet */
-      --a3: #22C55E; /* green */
+body{
+  margin:0;
+  font-family: system-ui, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(800px 400px at 10% 10%, rgba(79,220,255,.18), transparent 60%),
+    radial-gradient(800px 400px at 90% 20%, rgba(79,220,255,.12), transparent 60%),
+    linear-gradient(180deg,#05070c,#0b1220);
+}
 
-      --glass: rgba(255,255,255,.06);
-      --glass2: rgba(255,255,255,.10);
+/* ===== Glass helper ===== */
+.glass{
+  background: var(--glass-bg);
+  border:1px solid var(--glass-border);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius:18px;
+}
 
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-      --radius: 18px;
-    }
+/* ===== Header ===== */
+header{
+  position:sticky;
+  top:0;
+  z-index:10;
+  padding:14px 0;
+  background: rgba(5,7,12,.6);
+  backdrop-filter: blur(10px);
+}
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 700px at 15% 10%, rgba(85,230,255,.18), transparent 55%),
-        radial-gradient(900px 650px at 85% 15%, rgba(139,92,255,.16), transparent 55%),
-        radial-gradient(900px 700px at 50% 90%, rgba(34,197,94,.10), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
-      overflow-x:hidden;
-    }
+.header-inner{
+  width:92%;
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 
-    a{color:inherit; text-decoration:none}
-    a:hover{opacity:.92}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
 
-    .container{width:min(1100px, 92vw); margin-inline:auto}
+.logo img{
+  width:44px;
+  height:44px;
+  border-radius:14px;
+  box-shadow:
+    0 0 25px var(--cyan-soft),
+    0 0 45px rgba(79,220,255,.25);
+}
 
-    /* ====== Glass helper ====== */
-    .glass{
-      background: linear-gradient(180deg, var(--glass), rgba(255,255,255,.04));
-      border:1px solid var(--border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
+nav a{
+  color:var(--text);
+  text-decoration:none;
+  margin-left:14px;
+  padding:8px 14px;
+  border-radius:999px;
+  background: rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
+}
 
-    /* ====== Top nav ====== */
-    .nav{
-      position:sticky; top:0; z-index:50;
-      padding:14px 0;
-      background: linear-gradient(180deg, rgba(7,10,18,.75), rgba(7,10,18,.15));
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,.06);
-    }
-    .nav-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      min-width: 220px;
-    }
-    .brand img{
-      width:40px; height:40px; border-radius:12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.4);
-    }
-    .brand strong{font-size:15px; letter-spacing:.2px}
-    .menu{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
-    .pill{
-      padding:10px 12px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      transition: .2s ease;
-      font-size: 13px;
-    }
-    .pill:hover{transform: translateY(-1px); background: rgba(255,255,255,.075)}
-    .pill.primary{
-      border-color: rgba(85,230,255,.35);
-      background: linear-gradient(90deg, rgba(85,230,255,.16), rgba(139,92,255,.12));
-    }
+/* ===== Hero ===== */
+.hero{
+  width:92%;
+  max-width:1100px;
+  margin:40px auto 20px;
+  padding:26px;
+}
 
-    /* ====== Hero ====== */
-    .hero{padding:40px 0 18px}
-    .hero-card{padding:22px}
-    .hero-top{
-      display:flex; align-items:center; justify-content:space-between; gap:18px;
-      flex-wrap:wrap;
-    }
-    .hero h1{
-      margin:0;
-      font-size: clamp(28px, 4vw, 44px);
-      letter-spacing: .2px;
-      line-height:1.05;
-    }
-    .tagline{margin:10px 0 0; color:var(--muted); max-width: 70ch}
-    .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:11px 14px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      font-weight: 600;
-      font-size: 13px;
-      transition:.2s ease;
-    }
-    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.085)}
-    .btn.accent{
-      border-color: rgba(85,230,255,.35);
-      background: linear-gradient(90deg, rgba(85,230,255,.18), rgba(139,92,255,.14));
-    }
+.hero h1{
+  margin:0 0 10px;
+  font-size:40px;
+}
 
-    /* ====== “Slides” / Gallery (BIGGER) ====== */
-    .section{padding:18px 0}
-    .section h2{margin:0 0 10px; font-size: 18px}
-    .hint{color:var(--muted); font-size: 13px; margin:0 0 14px}
+.hero p{
+  color:#cfefff;
+  max-width:700px;
+}
 
-    .slider{
-      display:grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(280px, 1fr);
-      gap:14px;
-      overflow:auto;
-      padding: 10px;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: thin;
-    }
-    .slide{
-      scroll-snap-align: start;
-      padding: 14px;
-    }
+/* ===== Slider ===== */
+.slider{
+  width:92%;
+  max-width:1100px;
+  margin:30px auto;
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns: minmax(300px,1fr);
+  gap:20px;
+  overflow-x:auto;
+  padding:10px;
+}
 
-    /* هذا اللي بيكبّر “السلايد” فعليًا */
-    .slide-media{
-      width:100%;
-      height: 260px;          /* <-- كبّر/صغّر */
-      border-radius: 16px;
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.25);
-      box-shadow: 0 18px 55px rgba(0,0,0,.55);
-    }
-    .slide-media img{
-      width:100%;
-      height:100%;
-      object-fit: cover;
-      display:block;
-      transform: scale(1.02);
-    }
-    .slide h3{margin:12px 0 6px; font-size: 15px}
-    .slide p{margin:0; color:var(--muted); font-size: 13px; line-height:1.55}
+.slide{
+  padding:18px;
+}
 
-    /* ====== Feature cards ====== */
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap:14px;
-    }
-    .card{padding:16px}
-    .col-6{grid-column: span 6}
-    .col-4{grid-column: span 4}
-    @media (max-width: 900px){
-      .col-6,.col-4{grid-column: span 12}
-      .brand{min-width:auto}
-      .slide-media{height: 240px}
-    }
+.slide-media{
+  width:100%;
+  height:280px;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid rgba(79,220,255,.35);
+  box-shadow:
+    0 0 35px rgba(79,220,255,.35),
+    inset 0 0 25px rgba(79,220,255,.15);
+}
 
-    /* ====== Code block theme (match images) ====== */
-    pre{
-      margin:0;
-      padding:16px;
-      border-radius: 16px;
-      border:1px solid rgba(85,230,255,.18);
-      background:
-        radial-gradient(600px 220px at 15% 0%, rgba(85,230,255,.16), transparent 55%),
-        radial-gradient(500px 240px at 85% 0%, rgba(139,92,255,.14), transparent 55%),
-        rgba(0,0,0,.34);
-      overflow:auto;
-      box-shadow: 0 18px 55px rgba(0,0,0,.55);
-    }
-    code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      font-size: 13px;
-      color: rgba(255,255,255,.92);
-    }
-    .tok-k{color: var(--a1)}   /* “keywords” */
-    .tok-s{color: #FBBF24}     /* strings */
-    .tok-c{color: rgba(255,255,255,.55)} /* comments */
+.slide-media img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#05070c;
+}
 
-    /* ====== Footer ====== */
-    footer{
-      padding:28px 0 40px;
-      color: rgba(255,255,255,.62);
-      font-size: 13px;
-    }
-    .foot{
-      display:flex; gap:10px; align-items:center; justify-content:space-between;
-      flex-wrap:wrap;
-    }
-  </style>
+.slide h3{
+  margin:14px 0 6px;
+}
+
+.slide p{
+  color:#cfefff;
+  font-size:14px;
+}
+
+/* ===== Code block ===== */
+pre{
+  width:92%;
+  max-width:1100px;
+  margin:30px auto;
+  padding:20px;
+  border-radius:18px;
+  background:
+    radial-gradient(400px 120px at 10% 0%, rgba(79,220,255,.25), transparent 60%),
+    rgba(0,0,0,.55);
+  border:1px solid rgba(79,220,255,.35);
+  box-shadow:0 0 45px rgba(79,220,255,.35);
+  overflow:auto;
+}
+
+code{
+  color:#dff9ff;
+  font-family: monospace;
+}
+
+/* ===== Footer ===== */
+footer{
+  text-align:center;
+  padding:30px;
+  color:#a6e9ff;
+}
+</style>
 </head>
 
 <body>
-  <header class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="#top" aria-label="DefendIQOps Home">
-        <!-- غيّر اسم ملف اللوجو حسب الموجود عندك داخل assets -->
-        <img src="assets/defendiqops-logo.png" alt="DefendIQOps Logo">
-        <div>
-          <strong>DefendIQOps</strong><br>
-          <span style="color:var(--muted); font-size:12px;">Build. Verify. Defend.</span>
-        </div>
-      </a>
 
-      <nav class="menu" aria-label="Primary">
-        <a class="pill" href="#tools">Tools</a>
-        <a class="pill" href="#roadmap">Roadmap</a>
-        <a class="pill" href="#contribute">Contribute</a>
-        <a class="pill primary" href="./ar/" title="Arabic">AR</a>
-        <a class="pill" href="https://github.com/DefendIQOps" target="_blank" rel="noreferrer">⭐ GitHub</a>
-      </nav>
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <!-- المسار الصح -->
+      <img src="assets/img/logo.png" alt="DefendIQOps Logo">
+      <strong>DefendIQOps</strong>
     </div>
-  </header>
+    <nav>
+      <a href="#">Tools</a>
+      <a href="#">GitHub</a>
+    </nav>
+  </div>
+</header>
 
-  <main id="top" class="container">
-    <section class="hero">
-      <div class="glass hero-card">
-        <div class="hero-top">
-          <div>
-            <h1>DefendIQOps</h1>
-            <p class="tagline">
-              Practical, defensive-first cybersecurity utilities — focused scanners, analyzers, and blue-team helpers with safe defaults and reproducible outputs.
-            </p>
+<section class="glass hero">
+  <h1>DefendIQOps</h1>
+  <p>
+    Defensive-first cybersecurity tools.  
+    No exploitation. No abuse. Only protection.
+  </p>
+</section>
 
-            <div class="hero-actions">
-              <a class="btn accent" href="#tools">Explore Tools</a>
-              <a class="btn" href="https://github.com/DefendIQOps/defendiqops.github.io" target="_blank" rel="noreferrer">View Repo</a>
-              <a class="btn" href="https://github.com/DefendIQOps/defendiqops.github.io/issues/new" target="_blank" rel="noreferrer">Suggest a Tool</a>
-            </div>
+<section class="slider">
+  <div class="glass slide">
+    <div class="slide-media">
+      <img src="assets/img/logo.png" alt="Slide 1">
+    </div>
+    <h3>Primary Identity</h3>
+    <p>Main visual with cyan security glow.</p>
+  </div>
 
-            <p style="margin:14px 0 0; color:rgba(255,255,255,.55); font-size:12.5px;">
-              Authorized defensive use only • No offensive usage guidance
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+  <div class="glass slide">
+    <div class="slide-media">
+      <img src="assets/img/logo2.png" alt="Slide 2">
+    </div>
+    <h3>Alternate Mark</h3>
+    <p>Secondary logo for branding & tools.</p>
+  </div>
+</section>
 
-    <!-- ====== BIG SLIDES ====== -->
-    <section id="tools" class="section">
-      <h2>Tool Gallery</h2>
-      <p class="hint">هاي “السلايدات” كبّرتهم وخليتهم واضحين — اسحب يمين/شمال.</p>
+<pre><code>
+[INFO] Defensive scan initialized
+[OK] No exploitation performed
+[STATUS] Secure-by-design
+</code></pre>
 
-      <div class="slider">
-        <!-- بدّل الصور حسب اللي رفعتهم داخل assets -->
-        <article class="glass slide">
-          <div class="slide-media">
-            <img src="assets/slide-1.png" alt="Slide 1">
-          </div>
-          <h3>Scanners & Validators</h3>
-          <p>Safe checks for misconfigs, weak headers, risky exposure — بدون أي استغلال.</p>
-        </article>
+<footer>
+  © DefendIQOps — Authorized Defensive Use Only
+</footer>
 
-        <article class="glass slide">
-          <div class="slide-media">
-            <img src="assets/slide-2.png" alt="Slide 2">
-          </div>
-          <h3>Analyzers</h3>
-          <p>Log/URL/hash helpers for fast triage — clarity فوق كل شيء.</p>
-        </article>
-
-        <article class="glass slide">
-          <div class="slide-media">
-            <img src="assets/slide-3.png" alt="Slide 3">
-          </div>
-          <h3>Blue Team Utilities</h3>
-          <p>Workflows & templates for SOC/DFIR: collection, triage, reporting.</p>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="grid">
-        <div class="glass card col-6">
-          <h2 style="margin:0 0 8px;">Defensive-first</h2>
-          <p class="hint" style="margin:0;">Designed for validation, hardening checks, and incident triage — safe, authorized use only.</p>
-        </div>
-        <div class="glass card col-6">
-          <h2 style="margin:0 0 8px;">Fast & Lightweight</h2>
-          <p class="hint" style="margin:0;">Small scripts, clear output, minimal dependencies — easy to run anywhere.</p>
-        </div>
-
-        <div class="glass card col-4">
-          <h2 style="margin:0 0 8px;">Docs that matter</h2>
-          <p class="hint" style="margin:0;">Simple usage, examples, safe notes, reproducible results.</p>
-        </div>
-
-        <div class="glass card col-8">
-          <h2 style="margin:0 0 10px;">Example Output (theme updated)</h2>
-          <pre><code><span class="tok-c"># safe header check (example)</span>
-<span class="tok-k">GET</span> https://example.com
-<span class="tok-k">RESULT</span>: ✅ baseline OK
-<span class="tok-k">MISSING</span>: <span class="tok-s">"Content-Security-Policy"</span> (recommend)
-<span class="tok-k">TLS</span>: ✅ modern ciphers
-<span class="tok-k">NOTES</span>: <span class="tok-s">"No exploitation performed"</span></code></pre>
-        </div>
-      </div>
-    </section>
-
-    <section id="roadmap" class="section">
-      <div class="glass card">
-        <h2 style="margin:0 0 10px;">Roadmap</h2>
-        <div class="grid">
-          <div class="glass card col-4">
-            <h3 style="margin:0 0 6px;">Phase 1</h3>
-            <p class="hint" style="margin:0;">Launch the first tool (clean README, examples, safe disclaimer).</p>
-          </div>
-          <div class="glass card col-4">
-            <h3 style="margin:0 0 6px;">Phase 2</h3>
-            <p class="hint" style="margin:0;">Consistent structure: install, usage, output, limitations, tests.</p>
-          </div>
-          <div class="glass card col-4">
-            <h3 style="margin:0 0 6px;">Phase 3</h3>
-            <p class="hint" style="margin:0;">Community-friendly growth: templates, contribution guide, releases.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="contribute" class="section">
-      <div class="glass card">
-        <h2 style="margin:0 0 10px;">Contributing</h2>
-        <p class="hint" style="margin:0;">
-          PRs welcome — keep it clean and defensive. Suggest a tool with expected input/output and safe sample data.
-        </p>
-      </div>
-    </section>
-
-    <footer>
-      <div class="container foot">
-        <span>© DefendIQOps — Defensive use only.</span>
-        <span style="display:flex; gap:10px; flex-wrap:wrap;">
-          <a class="pill" href="#top">Back to top ↑</a>
-          <a class="pill" href="https://github.com/DefendIQOps" target="_blank" rel="noreferrer">GitHub Org</a>
-        </span>
-      </div>
-    </footer>
-  </main>
 </body>
 </html>
