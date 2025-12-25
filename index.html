@@ -1,516 +1,598 @@
 <!doctype html>
-<html lang="en" data-lang="en">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#061018" />
   <title>DefendIQOps</title>
+  <meta name="description" content="DefendIQOps — Security. Verified. Defensive. A defensive-first toolkit and services hub." />
 
   <style>
     :root{
-      --bg0:#050c12;
-      --bg1:#061018;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.09);
-      --stroke: rgba(255,255,255,.12);
-      --glow: rgba(0, 240, 255, .22);
-      --glow2: rgba(0, 240, 255, .10);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.68);
-      --muted2: rgba(255,255,255,.55);
-      --shadow: 0 18px 40px rgba(0,0,0,.55);
-      --radius: 20px;
-      --radius2: 26px;
-      --max: 1100px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --bg0:#050b12;
+      --bg1:#071522;
+      --glass: rgba(255,255,255,.08);
+      --glass2: rgba(255,255,255,.12);
+      --stroke: rgba(255,255,255,.14);
+      --text:#eaf3ff;
+      --muted: rgba(234,243,255,.75);
+      --muted2: rgba(234,243,255,.55);
+      --brand:#7fe7ff;
+      --brand2:#46b7ff;
+      --ok:#4dffb8;
+      --warn:#ffd66b;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --radius: 22px;
+      --radius2: 28px;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      font-family: var(--sans);
-      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
       background:
-        radial-gradient(1000px 600px at 20% 0%, rgba(0,240,255,.12), transparent 60%),
-        radial-gradient(900px 560px at 85% 15%, rgba(0,240,255,.10), transparent 55%),
-        radial-gradient(700px 460px at 55% 95%, rgba(0,240,255,.08), transparent 60%),
+        radial-gradient(1200px 600px at 20% 10%, rgba(127,231,255,.16), transparent 55%),
+        radial-gradient(900px 500px at 80% 25%, rgba(70,183,255,.12), transparent 60%),
+        radial-gradient(800px 500px at 45% 85%, rgba(77,255,184,.10), transparent 55%),
         linear-gradient(180deg, var(--bg0), var(--bg1));
       overflow-x:hidden;
     }
 
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:22px 16px 64px}
-    .topbar{
-      position:sticky; top:0; z-index:30;
-      padding:12px 0;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(6,16,24,.85), rgba(6,16,24,.35));
-      border-bottom: 1px solid rgba(255,255,255,.06);
+    a{ color: inherit; text-decoration:none; }
+    .container{ width:min(1120px, 92vw); margin:0 auto; }
+
+    /* Background ornaments */
+    .grid{
+      position:fixed;
+      inset:-20vh -20vw;
+      background-image:
+        linear-gradient(rgba(255,255,255,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.07) 1px, transparent 1px);
+      background-size: 46px 46px;
+      mask-image: radial-gradient(circle at 50% 35%, rgba(0,0,0,.9), transparent 72%);
+      opacity:.18;
+      pointer-events:none;
+      z-index:-2;
     }
-    .topbar-inner{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:0 16px;
+    .noise{
+      position:fixed; inset:0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+      opacity:.06;
+      mix-blend-mode: overlay;
+      pointer-events:none;
+      z-index:-1;
+    }
+
+    /* Glass helpers */
+    .glass{
+      background: linear-gradient(180deg, var(--glass), rgba(255,255,255,.05));
+      border: 1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: var(--radius2);
+    }
+
+    /* Header */
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(6,16,24,.55);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .nav{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:10px;
+      padding:14px 0;
+      gap:16px;
     }
     .brand{
-      display:flex; align-items:center; gap:10px; min-width:0;
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.4px;
     }
-    .logo{
-      width:34px; height:34px;
-      border-radius:12px;
-      background: rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow: 0 0 0 1px rgba(0,240,255,.06), 0 10px 22px rgba(0,0,0,.35);
-      display:grid; place-items:center;
-      overflow:hidden;
+    .brand-dot{
+      width:10px; height:10px; border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--brand));
+      box-shadow: 0 0 18px rgba(127,231,255,.6);
     }
-    .logo span{
-      font-size:12px;
-      font-weight:800;
-      color: rgba(255,255,255,.86);
-      letter-spacing:.5px;
+    nav a{
+      padding:10px 12px;
+      color: var(--muted);
+      border-radius: 14px;
+      transition: transform .18s ease, background .18s ease, color .18s ease;
     }
-    .brand h1{
-      margin:0; font-size:14px; line-height:1.1;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    nav a:hover{
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      transform: translateY(-1px);
     }
-    .brand p{
-      margin:0; font-size:12px; color:var(--muted2);
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    .nav-cta{
+      display:flex; gap:10px; align-items:center;
     }
-    .menuBtn{
-      width:40px;height:40px;border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(12px);
-      display:grid; place-items:center;
-      cursor:pointer;
-    }
-    .menuBtn:active{transform: translateY(1px)}
-    .menuDots{
-      width:16px;height:10px; position:relative;
-    }
-    .menuDots:before,.menuDots:after,.menuDots i{
-      content:""; position:absolute; left:0; right:0; margin:auto;
-      width:16px; height:2px; border-radius:2px;
-      background: rgba(255,255,255,.78);
-      opacity:.9;
-    }
-    .menuDots:before{top:0}
-    .menuDots i{top:4px}
-    .menuDots:after{top:8px}
 
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+      cursor:pointer;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{
+      transform: translateY(-2px);
+      border-color: rgba(127,231,255,.35);
+      box-shadow: 0 16px 40px rgba(0,0,0,.45);
+      background: rgba(255,255,255,.10);
+    }
+    .btn.primary{
+      border-color: rgba(127,231,255,.40);
+      background: linear-gradient(180deg, rgba(127,231,255,.22), rgba(70,183,255,.12));
+      box-shadow: 0 16px 50px rgba(70,183,255,.18);
+    }
+
+    /* Hero */
     .hero{
-      margin-top:14px;
-      padding:22px;
-      border-radius: var(--radius2);
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
-      border:1px solid rgba(255,255,255,.12);
-      box-shadow: var(--shadow), 0 0 0 1px rgba(0,240,255,.08), 0 0 70px rgba(0,240,255,.10);
-      position:relative;
-      overflow:hidden;
+      padding: 36px 0 18px;
     }
-    .hero:before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(900px 360px at 20% 20%, rgba(0,240,255,.16), transparent 55%);
-      pointer-events:none;
-    }
-    .heroGrid{
+    .hero-grid{
       display:grid;
       grid-template-columns: 1.2fr .8fr;
       gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .hero-grid{ grid-template-columns:1fr; }
+      nav{ display:none; }
+    }
+
+    .hero-card{
+      padding: 28px;
       position:relative;
+      overflow:hidden;
+      border-radius: var(--radius2);
     }
-    @media (max-width: 860px){
-      .heroGrid{grid-template-columns:1fr}
+    .hero-card:before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(500px 240px at 20% 0%, rgba(127,231,255,.28), transparent 60%),
+        radial-gradient(520px 240px at 80% 10%, rgba(77,255,184,.18), transparent 60%);
+      opacity:.9;
+      filter: blur(0px);
+      pointer-events:none;
     }
-    .hero h2{
-      margin:0 0 6px 0;
-      font-size:28px;
-      letter-spacing:.2px;
-    }
-    .hero p{
-      margin:0;
-      color:var(--muted);
-      max-width: 62ch;
-      line-height:1.45;
-      font-size:14px;
-    }
-    .btnRow{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top:14px;
-    }
-    .btn{
+    .hero-inner{ position:relative; z-index:1; }
+
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
       padding:10px 12px;
       border-radius: 999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      backdrop-filter: blur(12px);
-      color: rgba(255,255,255,.88);
-      font-size:13px;
-      font-weight:700;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.07);
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .k-badge{
+      width: 10px; height:10px; border-radius: 999px;
+      background: var(--ok);
+      box-shadow: 0 0 16px rgba(77,255,184,.55);
+    }
+    h1{
+      margin: 14px 0 10px;
+      font-size: clamp(28px, 3.3vw, 44px);
+      line-height: 1.08;
+      letter-spacing: -0.6px;
+    }
+    .lead{
+      margin:0 0 18px;
+      color: var(--muted);
+      font-size: 15.5px;
+      line-height: 1.6;
+      max-width: 64ch;
+    }
+    .hero-actions{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 8px; }
+    .meta-row{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top: 18px;
+      color: var(--muted2);
+      font-size: 13px;
+    }
+    .meta-pill{
       display:inline-flex; align-items:center; gap:8px;
-      cursor:pointer;
-      user-select:none;
-    }
-    .btn.primary{
-      border-color: rgba(0,240,255,.28);
-      box-shadow: 0 0 0 1px rgba(0,240,255,.10), 0 0 30px rgba(0,240,255,.16);
-    }
-
-    .chips{
-      display:grid; gap:10px;
-      align-content:start;
-    }
-    .chip{
-      padding:12px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-    }
-    .chip b{display:block; font-size:12px; margin-bottom:4px}
-    .chip span{display:block; font-size:12px; color:var(--muted2); line-height:1.35}
-
-    .console{
-      margin-top:14px;
+      padding:10px 12px;
       border-radius: 16px;
       border:1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.26);
-      box-shadow: inset 0 0 0 1px rgba(0,240,255,.05);
+      background: rgba(255,255,255,.05);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .meta-pill:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(127,231,255,.30);
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: var(--brand);
+      box-shadow: 0 0 14px rgba(127,231,255,.55);
+    }
+
+    /* Slider card */
+    .slider{
+      padding: 18px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      border-radius: var(--radius2);
       overflow:hidden;
     }
-    .consoleHead{
-      padding:10px 12px;
-      display:flex; justify-content:space-between; align-items:center;
-      gap:10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.04);
+    .slider-top{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
     }
-    .dots{display:flex; gap:6px; align-items:center}
-    .dot{width:9px;height:9px;border-radius:50%}
-    .dot.r{background:#ff5f57}
-    .dot.y{background:#febc2e}
-    .dot.g{background:#28c840}
-    .consoleHead small{color:var(--muted2)}
-    .consoleBody{
-      padding:12px;
-      font-family: var(--mono);
-      font-size:12px;
-      line-height:1.45;
-      color: rgba(255,255,255,.85);
+    .slider-title{
+      font-weight:800;
+      letter-spacing:.3px;
     }
-    .consoleBody .k{color: rgba(0,240,255,.92)}
-    .consoleBody .m{color: rgba(255,255,255,.7)}
-    .consoleBody .ok{color: rgba(110,255,180,.88)}
+    .slider-sub{ color: var(--muted2); font-size: 13px; }
+    .slider-stage{
+      position:relative;
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+      overflow:hidden;
+      min-height: 260px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 18px 50px rgba(0,0,0,.45);
+    }
+    .slide-img{
+      width: 92%;
+      max-width: 420px;
+      height: auto;
+      filter: drop-shadow(0 18px 40px rgba(0,0,0,.55));
+      transform: translateZ(0);
+      opacity:0;
+      transition: opacity .55s ease, transform .55s ease;
+      position:absolute;
+      will-change: opacity, transform;
+    }
+    .slide-img.active{
+      opacity:1;
+      transform: scale(1.02);
+    }
+    .slider-dots{
+      display:flex; gap:8px; justify-content:center; padding-bottom: 6px;
+    }
+    .s-dot{
+      width: 7px; height:7px; border-radius:999px;
+      background: rgba(255,255,255,.22);
+      border:1px solid rgba(255,255,255,.12);
+      transition: transform .2s ease, background .2s ease, border-color .2s ease;
+    }
+    .s-dot.active{
+      background: rgba(127,231,255,.75);
+      border-color: rgba(127,231,255,.55);
+      transform: scale(1.25);
+    }
 
-    .section{
-      margin-top:22px;
+    /* Sections */
+    section{ padding: 18px 0; }
+    .section-head{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:14px;
+      margin: 8px 0 12px;
     }
-    .sectionTitle{
-      display:flex; justify-content:space-between; align-items:baseline;
-      gap:10px;
-      margin:0 0 10px 0;
+    .section-head h2{
+      margin:0;
+      font-size: 20px;
+      letter-spacing: -.2px;
     }
-    .sectionTitle h3{margin:0; font-size:14px; letter-spacing:.3px}
-    .sectionTitle small{color:var(--muted2)}
-    .grid2{
+    .section-head p{ margin:0; color: var(--muted2); font-size: 13px; max-width: 70ch; }
+
+    .cards{
       display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
     }
-    @media (max-width: 720px){
-      .grid2{grid-template-columns:1fr}
+    @media (max-width: 900px){
+      .cards{ grid-template-columns:1fr; }
     }
 
     .card{
+      padding: 18px;
       border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      box-shadow: 0 12px 28px rgba(0,0,0,.35);
-      overflow:hidden;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
       position:relative;
-    }
-
-    .assetFrame{
-      border-radius: 18px;
-      margin:12px;
-      background: radial-gradient(800px 240px at 20% 20%, rgba(0,240,255,.10), transparent 58%),
-                  rgba(0,0,0,.18);
-      border:1px solid rgba(255,255,255,.10);
       overflow:hidden;
-      aspect-ratio: 16 / 9;
-      min-height: 190px;
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      border-color: rgba(127,231,255,.30);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+    }
+    .card h3{ margin: 8px 0 8px; font-size: 16px; }
+    .card p{ margin:0; color: var(--muted); font-size: 13.5px; line-height: 1.55; }
+    .icon{
+      width: 38px; height: 38px; border-radius: 14px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.07);
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+    }
+
+    /* CTA strip */
+    .cta{
+      padding: 18px;
       display:flex;
       align-items:center;
-      justify-content:center;
+      justify-content:space-between;
+      gap: 14px;
+      flex-wrap:wrap;
     }
-    .assetFrame img{
-      width:100%;
-      height:100%;
-      display:block;
-      object-fit: contain;
-      padding: 10px;
-      image-rendering: auto;
-      filter: drop-shadow(0 0 22px rgba(0,240,255,.12));
-    }
+    .cta strong{ font-size: 15px; }
+    .cta small{ color: var(--muted2); display:block; margin-top:4px; }
 
-    .assetMeta{
-      padding: 0 12px 12px 12px;
-      display:flex; justify-content:space-between; gap:10px; align-items:flex-end;
-    }
-    .assetMeta .txt b{display:block; font-size:12px; margin-bottom:3px}
-    .assetMeta .txt span{display:block; font-size:12px; color:var(--muted2)}
-    .pill{
-      font-size:11px; font-weight:800;
-      padding:7px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(0,240,255,.22);
-      background: rgba(0,240,255,.08);
-      color: rgba(255,255,255,.85);
-      white-space:nowrap;
-    }
-
-    .warn{
-      width:100%;
-      height:100%;
-      padding:14px;
-      font-family: var(--mono);
-      font-size:12px;
-      line-height:1.4;
-      color: rgba(255,210,120,.92);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-    }
-
-    .toolList{display:grid; gap:10px}
-    .toolItem{
-      display:flex; justify-content:space-between; align-items:center;
-      gap:12px;
-      padding:12px 14px;
-      border-radius: 18px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      cursor:pointer;
-      transition: transform .12s ease;
-    }
-    .toolItem:hover{transform: translateY(-1px)}
-    .toolItem b{display:block; font-size:13px; margin-bottom:2px}
-    .toolItem span{display:block; font-size:12px; color:var(--muted2); line-height:1.35}
-    .tag{
-      font-size:11px; font-weight:900;
-      padding:7px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.82);
-      white-space:nowrap;
-    }
-
-    .footerRow{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:12px;
-    }
-
-    .mutedNote{
+    footer{
+      padding: 22px 0 32px;
       color: var(--muted2);
-      font-size:12px;
-      line-height:1.35;
+      font-size: 13px;
+    }
+    .footer-grid{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap:wrap;
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 16px;
     }
   </style>
 </head>
 
 <body>
-  <div class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">
-        <div class="logo" aria-hidden="true"><span>DIQ</span></div>
-        <div style="min-width:0">
-          <h1>DefendIQOps</h1>
-          <p>Defensive-first security</p>
+  <div class="grid" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="DefendIQOps Home">
+          <span class="brand-dot" aria-hidden="true"></span>
+          <span>DefendIQOps</span>
+        </a>
+
+        <nav aria-label="Primary">
+          <a href="#services">Services</a>
+          <a href="#toolkit">Toolkit</a>
+          <a href="#trust">Why Us</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="nav-cta">
+          <a class="btn" href="#toolkit">Explore</a>
+          <a class="btn primary" href="#contact">Get a Quote</a>
         </div>
       </div>
-      <button class="menuBtn" type="button" aria-label="Menu">
-        <div class="menuDots"><i></i></div>
-      </button>
     </div>
-  </div>
+  </header>
 
-  <main class="wrap">
-    <section class="hero" id="top">
-      <div class="heroGrid">
+  <main id="top" class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-card glass">
+          <div class="hero-inner">
+            <div class="kicker">
+              <span class="k-badge" aria-hidden="true"></span>
+              Defensive-first security utilities & services
+            </div>
+
+            <h1>Protect your site & workflow — fast, clean, defensive.</h1>
+            <p class="lead">
+              DefendIQOps helps you validate security posture, spot risky configurations,
+              and ship safer systems with a practical, business-friendly approach.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn primary" href="#contact">Request Assessment</a>
+              <a class="btn" href="#toolkit">View Tools</a>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-pill"><span class="dot" aria-hidden="true"></span> Fast setup</span>
+              <span class="meta-pill"><span class="dot" aria-hidden="true"></span> Clear reports</span>
+              <span class="meta-pill"><span class="dot" aria-hidden="true"></span> Defensive only</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SLIDER: uses ONLY your two images with the SAME paths -->
+        <aside class="slider glass" aria-label="Brand slider">
+          <div class="slider-top">
+            <div>
+              <div class="slider-title">Brand Preview</div>
+              <div class="slider-sub">Auto-switching between two logos</div>
+            </div>
+            <button class="btn" id="toggleSlide" type="button" aria-pressed="true" title="Pause / Play">
+              Pause
+            </button>
+          </div>
+
+          <div class="slider-stage" role="group" aria-label="Logo slideshow">
+            <img class="slide-img active" id="slide1" src="assets/img/logo.png" alt="DefendIQOps logo variation 1" />
+            <img class="slide-img" id="slide2" src="assets/img/logo2.png" alt="DefendIQOps logo variation 2" />
+          </div>
+
+          <div class="slider-dots" aria-label="Slide indicators">
+            <span class="s-dot active" id="dot1" aria-hidden="true"></span>
+            <span class="s-dot" id="dot2" aria-hidden="true"></span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="section-head">
         <div>
-          <h2>DefendIQOps</h2>
-          <p>
-            Defensive-first cybersecurity tools. No exploitation. No abuse. Only protection.
-            Built to help you validate, monitor, and harden systems—clean, simple, and safe-by-design.
-          </p>
-
-          <div class="btnRow">
-            <a class="btn primary" href="#tools">Explore Tools</a>
-            <a class="btn" href="#brand">View Brand Assets</a>
-            <a class="btn" href="#roadmap">What’s Next</a>
-          </div>
-
-          <div class="console" aria-label="Console">
-            <div class="consoleHead">
-              <div class="dots" aria-hidden="true">
-                <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
-              </div>
-              <small>tip: press <span class="k">Tools</span></small>
-            </div>
-            <div class="consoleBody">
-              <div><span class="m">[INFO]</span> Defensive scan initialized</div>
-              <div><span class="ok">[OK]</span> No exploitation performed</div>
-              <div><span class="m">[STATUS]</span> Secure-by-design UI loaded</div>
-              <div><span class="m">[READY]</span> Brand assets path: <span class="k">assets/img/</span></div>
-            </div>
-          </div>
+          <h2>Services that build trust</h2>
+          <p>People pick sites that look reliable, clear, and “safe”. So we focus on clarity, proof, and smooth UX.</p>
         </div>
+      </div>
 
-        <div class="chips">
-          <div class="chip">
-            <b>Glass UI</b>
-            <span>cyan glow theme</span>
-          </div>
-          <div class="chip">
-            <b>Defensive Only</b>
-            <span>no abuse, no exploit</span>
-          </div>
-          <div class="chip">
-            <b>Mobile Ready</b>
-            <span>clean responsive layout</span>
-          </div>
+      <div class="cards">
+        <div class="card glass">
+          <div class="icon" aria-hidden="true">🛡️</div>
+          <h3>Defensive Security Review</h3>
+          <p>Configuration checks, best-practice hardening, and risk prioritization — no offensive actions.</p>
+        </div>
+        <div class="card glass">
+          <div class="icon" aria-hidden="true">📄</div>
+          <h3>Readable Reports</h3>
+          <p>Non-technical summary + technical appendix, so decision-makers understand what matters.</p>
+        </div>
+        <div class="card glass">
+          <div class="icon" aria-hidden="true">⚙️</div>
+          <h3>Practical Remediation</h3>
+          <p>Step-by-step fixes and validation, aimed at shipping improvements quickly with minimal disruption.</p>
         </div>
       </div>
     </section>
 
-    <section class="section" id="brand">
-      <div class="sectionTitle">
-        <h3>Brand Assets</h3>
-        <small>Big previews • no crop (full image visible)</small>
-      </div>
-
-      <div class="grid2">
-        <article class="card">
-          <div class="assetFrame" id="framePrimary">
-            <img id="imgPrimary" alt="DefendIQOps Primary Identity" loading="lazy" />
-          </div>
-          <div class="assetMeta">
-            <div class="txt">
-              <b>DefendIQOps Primary Identity</b>
-              <span>Main visual with cyan security glow.</span>
-            </div>
-            <div class="pill">Full image</div>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="assetFrame" id="frameAlt">
-            <img id="imgAlt" alt="DefendIQOps Alternate Mark" loading="lazy" />
-          </div>
-          <div class="assetMeta">
-            <div class="txt">
-              <b>DefendIQOps Alternate Mark</b>
-              <span>Secondary logo for branding & tools.</span>
-            </div>
-            <div class="pill">No crop</div>
-          </div>
-        </article>
-      </div>
-
-      <p class="mutedNote" style="margin:10px 2px 0 2px">
-        If an image doesn’t load, it will show a warning with the exact path GitHub Pages tried to load.
-      </p>
-    </section>
-
-    <section class="section" id="tools">
-      <div class="sectionTitle">
-        <h3>Tools Hub</h3>
-        <small>defensive • safe-by-design</small>
-      </div>
-
-      <div class="toolList">
-
-        <a class="toolItem" href="tools/phishing.html">
-          <div>
-            <b>Phishing Checker</b>
-            <span>Analyze suspicious messages safely and highlight red flags without sending data anywhere.</span>
-          </div>
-          <div class="tag">Defensive</div>
-        </a>
-
-        <a class="toolItem" href="tools/url-reputation.html">
-          <div>
-            <b>URL Reputation</b>
-            <span>Local checks + policy-based warnings. No intrusive scraping, no exploitation behaviors.</span>
-          </div>
-          <div class="tag">Safe-by-design</div>
-        </a>
-
-        <a class="toolItem" href="tools/harden-checklist.html">
-          <div>
-            <b>Harden Checklist</b>
-            <span>Step-by-step security baseline for small businesses—clean, actionable, easy to follow.</span>
-          </div>
-          <div class="tag">Ops</div>
-        </a>
-
-      </div>
-    </section>
-
-    <section class="section" id="roadmap">
-      <div class="sectionTitle">
-        <h3>Roadmap</h3>
-        <small>Next upgrades</small>
-      </div>
-
-      <article class="card" style="padding:14px 16px">
-        <ul style="margin:0; padding-left:18px; color:rgba(255,255,255,.78); font-size:13px; line-height:1.5">
-          <li>Add real tool pages (each tool gets its own section/page)</li>
-          <li>Add “Docs” area + screenshots</li>
-          <li>Add download links for defensive utilities (only safe tools)</li>
-          <li>Add light animations on scroll (optional)</li>
-        </ul>
-
-        <div class="footerRow">
-          <a class="btn primary" href="https://github.com/defendiqops" target="_blank" rel="noopener">Open GitHub</a>
-          <a class="btn" href="#top">Back to top</a>
+    <section id="toolkit">
+      <div class="section-head">
+        <div>
+          <h2>Toolkit (clean & commercial)</h2>
+          <p>Short list, clear value, and quick CTA — this is what converts better than long walls of text.</p>
         </div>
-      </article>
+      </div>
+
+      <div class="cards">
+        <div class="card glass">
+          <div class="icon" aria-hidden="true">🔍</div>
+          <h3>Phishing Message Check</h3>
+          <p>Spot suspicious patterns, domain tricks, and risky links with easy-to-read scoring.</p>
+        </div>
+        <div class="card glass">
+          <div class="icon" aria-hidden="true">🧩</div>
+          <h3>Header & TLS Validation</h3>
+          <p>Quick checks for security headers, HTTPS posture, and common misconfigurations.</p>
+        </div>
+        <div class="card glass">
+          <div class="icon" aria-hidden="true">📦</div>
+          <h3>Asset Integrity</h3>
+          <p>Track changes in files and configs, and detect unexpected modifications early.</p>
+        </div>
+      </div>
     </section>
+
+    <section id="trust">
+      <div class="section-head">
+        <div>
+          <h2>Why this style works (بدون فلسفة زايدة)</h2>
+          <p>Commercial sites win when: value is clear in 5 seconds, buttons are obvious, and layout feels “premium”.</p>
+        </div>
+      </div>
+
+      <div class="cta glass">
+        <div>
+          <strong>Want it even smoother?</strong>
+          <small>I can add a “Pricing” block + FAQ + a simple contact form (front-end) next.</small>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn" href="#services">See Services</a>
+          <a class="btn primary" href="#contact">Contact Now</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-head">
+        <div>
+          <h2>Contact</h2>
+          <p>Keep it simple: one CTA, one path. This reduces drop-off.</p>
+        </div>
+      </div>
+
+      <div class="card glass" style="padding:20px;">
+        <p style="margin:0; color:var(--muted); line-height:1.7;">
+          Email: <strong style="color:var(--text);">S3killer7772@gmail.com</strong><br/>
+          Brand: <strong style="color:var(--text);">DefendIQOps</strong><br/>
+          Tagline: <strong style="color:var(--text);">Security. Verified. Defensive.</strong>
+        </p>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-grid">
+        <span>© <span id="year"></span> DefendIQOps. All rights reserved.</span>
+        <span>Built with a defensive-first mindset.</span>
+      </div>
+    </footer>
   </main>
 
   <script>
-    const PRIMARY_IMAGE = "assets/img/logo.png";
-    const ALT_IMAGE     = "assets/img/logo2.png";
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    const imgPrimary = document.getElementById("imgPrimary");
-    const imgAlt = document.getElementById("imgAlt");
+    // Slider (ONLY two images, and your exact paths are used in the HTML)
+    const slide1 = document.getElementById("slide1");
+    const slide2 = document.getElementById("slide2");
+    const dot1 = document.getElementById("dot1");
+    const dot2 = document.getElementById("dot2");
+    const toggleBtn = document.getElementById("toggleSlide");
 
-    function setWithFallback(imgEl, src) {
-      imgEl.src = src;
+    let idx = 0;
+    let playing = true;
+    let timer = null;
 
-      imgEl.onerror = () => {
-        const frame = imgEl.parentElement;
-        frame.innerHTML = `<div class="warn">
-          Image not found.<br><br>
-          Check path & filename (case-sensitive):<br>
-          <span style="color:rgba(255,255,255,.86)">${src}</span>
-        </div>`;
-      };
+    function render(){
+      const s1 = idx === 0;
+      slide1.classList.toggle("active", s1);
+      slide2.classList.toggle("active", !s1);
+      dot1.classList.toggle("active", s1);
+      dot2.classList.toggle("active", !s1);
     }
 
-    setWithFallback(imgPrimary, PRIMARY_IMAGE);
-    setWithFallback(imgAlt, ALT_IMAGE);
+    function next(){
+      idx = (idx + 1) % 2;
+      render();
+    }
+
+    function play(){
+      if (timer) clearInterval(timer);
+      timer = setInterval(next, 4000);
+      playing = true;
+      toggleBtn.textContent = "Pause";
+      toggleBtn.setAttribute("aria-pressed", "true");
+    }
+
+    function pause(){
+      if (timer) clearInterval(timer);
+      timer = null;
+      playing = false;
+      toggleBtn.textContent = "Play";
+      toggleBtn.setAttribute("aria-pressed", "false");
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      playing ? pause() : play();
+    });
+
+    // Start
+    render();
+    play();
   </script>
 </body>
 </html>
