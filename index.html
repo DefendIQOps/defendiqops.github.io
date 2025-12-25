@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-lang="en">
+<html lang="en" dir="ltr" data-lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -13,13 +13,11 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://defendiqops.github.io/" />
 
-  <!-- Fonts (system-safe). You can swap later. -->
   <style>
     :root{
       --bg0:#050b14;
       --bg1:#070f1f;
       --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.08);
       --stroke:rgba(255,255,255,.12);
       --text:#eaf0ff;
       --muted:rgba(234,240,255,.75);
@@ -27,7 +25,6 @@
       --accent:#43f3d2;
       --accent2:#5aa8ff;
       --warn:#ffd36c;
-      --ok:#7CFFB2;
       --shadow: 0 18px 60px rgba(0,0,0,.45);
       --radius:22px;
       --radius2:28px;
@@ -46,6 +43,10 @@
         radial-gradient(900px 600px at 50% 90%, rgba(67,243,210,.10), transparent 60%),
         linear-gradient(180deg, var(--bg0), var(--bg1) 45%, #030812);
       overflow-x:hidden;
+    }
+
+    html[data-lang="ar"] body{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans Arabic", "Noto Sans", sans-serif;
     }
 
     a{color:inherit;text-decoration:none}
@@ -76,6 +77,8 @@
       display:flex; align-items:center; gap:12px;
       min-width: 210px;
     }
+    html[dir="rtl"] .brand{flex-direction:row-reverse}
+
     .logo{
       width:40px;height:40px;border-radius:14px;
       background:
@@ -94,10 +97,13 @@
     }
     .brand h1{font-size:15px;margin:0;letter-spacing:.3px}
     .brand p{margin:0; color:var(--muted2); font-size:12px}
+
     .menu{
       display:flex; gap:10px; align-items:center; flex-wrap:wrap;
       justify-content:flex-end;
     }
+    html[dir="rtl"] .menu{justify-content:flex-start}
+
     .chip{
       display:inline-flex; align-items:center; gap:8px;
       padding:9px 12px; border-radius:999px;
@@ -107,6 +113,7 @@
       font-size:13px;
       transition: transform .15s ease, background .15s ease, border-color .15s ease;
       user-select:none;
+      white-space:nowrap;
     }
     .chip:hover{transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.18)}
     .chip strong{color:var(--text); font-weight:700}
@@ -134,9 +141,7 @@
     .btn.ghost{background: transparent}
 
     /* Hero */
-    .hero{
-      padding: 44px 0 18px;
-    }
+    .hero{padding: 44px 0 18px;}
     .hero-grid{
       display:grid;
       grid-template-columns: 1.35fr .65fr;
@@ -163,6 +168,7 @@
       pointer-events:none;
     }
     .hero-card > *{position:relative}
+
     .kicker{
       display:inline-flex; align-items:center; gap:10px;
       padding:7px 10px;
@@ -185,9 +191,8 @@
       line-height: 1.05;
       letter-spacing: -0.6px;
     }
-    @media (max-width: 520px){
-      h2{font-size: 34px}
-    }
+    @media (max-width: 520px){ h2{font-size: 34px} }
+
     .subtitle{
       margin:0 0 18px;
       color: var(--muted);
@@ -196,10 +201,8 @@
       max-width: 62ch;
     }
 
-    .cta{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-      margin-top: 6px;
-    }
+    .cta{display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top: 6px;}
+    html[dir="rtl"] .cta{justify-content:flex-start}
 
     .metrics{
       padding: 18px;
@@ -208,7 +211,7 @@
       gap:12px;
     }
     .stat{
-      padding: 14px 14px;
+      padding: 14px;
       border-radius: 18px;
       background: rgba(255,255,255,.05);
       border: 1px solid rgba(255,255,255,.12);
@@ -223,16 +226,8 @@
       gap:12px;
       margin: 8px 0 12px;
     }
-    .section-title h3{
-      margin:0;
-      font-size: 18px;
-      letter-spacing: .2px;
-    }
-    .section-title p{
-      margin:0;
-      color: var(--muted2);
-      font-size: 12.5px;
-    }
+    .section-title h3{margin:0; font-size: 18px; letter-spacing: .2px;}
+    .section-title p{margin:0; color: var(--muted2); font-size: 12.5px;}
 
     .grid{
       display:grid;
@@ -256,6 +251,7 @@
       border-color: rgba(255,255,255,.20);
       background: rgba(255,255,255,.06);
     }
+
     .badge{
       display:inline-flex; align-items:center; gap:8px;
       padding: 7px 10px;
@@ -274,7 +270,14 @@
     }
     .card h4{margin:10px 0 8px; font-size:15px}
     .card p{margin:0; color:var(--muted); font-size:13px; line-height:1.6}
-    .card ul{margin:10px 0 0; padding:0 0 0 18px; color:var(--muted); font-size:13px; line-height:1.7}
+    .card ul{
+      margin:10px 0 0;
+      padding-inline-start: 18px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7
+    }
+
     .hr{
       height:1px;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,.16), transparent);
@@ -282,11 +285,7 @@
     }
 
     /* Footer */
-    footer{
-      padding: 28px 0 34px;
-      color: var(--muted2);
-      font-size: 12.5px;
-    }
+    footer{padding: 28px 0 34px; color: var(--muted2); font-size: 12.5px;}
     .footer-grid{
       display:flex; flex-wrap:wrap; gap:12px;
       align-items:center; justify-content:space-between;
@@ -299,22 +298,16 @@
       background: rgba(255,255,255,.03);
     }
     .links a:hover{background: rgba(255,255,255,.05)}
+
     .pill-warn{
       border-color: rgba(255,211,108,.35)!important;
       background: rgba(255,211,108,.08)!important;
       color: rgba(255,240,210,.95)!important;
     }
 
-    /* Language (RTL) */
-    [data-lang="ar"] body{font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans Arabic", "Noto Sans", sans-serif;}
-    [data-lang="ar"] .rtl{
-      direction: rtl;
-      text-align: right;
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none!important; scroll-behavior:auto!important}
     }
-    [data-lang="ar"] .rtl ul{padding:0 18px 0 0}
-    [data-lang="ar"] .rtl .brand{flex-direction:row-reverse}
-    [data-lang="ar"] .rtl .menu{justify-content:flex-start}
-    [data-lang="ar"] .rtl .cta{justify-content:flex-start}
   </style>
 </head>
 
@@ -339,8 +332,8 @@
           🌐 <span id="t_lang">AR</span>
         </button>
 
-        <a class="btn primary" id="t_btn_github" href="https://github.com/DefendIQOps" target="_blank" rel="noreferrer">
-          ⭐ GitHub
+        <a class="btn primary" id="btnGithub" href="https://github.com/DefendIQOps" target="_blank" rel="noreferrer">
+          ⭐ <span id="t_btn_github">GitHub</span>
         </a>
       </div>
     </div>
@@ -348,7 +341,7 @@
 </header>
 
 <main class="container">
-  <div class="hero rtl" id="rtlWrap">
+  <div class="hero">
     <div class="hero-grid">
       <div class="hero-card glass">
         <div class="kicker">
@@ -393,7 +386,7 @@
     </div>
   </div>
 
-  <section id="tools" class="rtl">
+  <section id="tools">
     <div class="section-title">
       <div>
         <h3 id="t_tools_title">Tool Categories</h3>
@@ -438,7 +431,7 @@
     </div>
   </section>
 
-  <section id="roadmap" class="rtl">
+  <section id="roadmap">
     <div class="section-title">
       <div>
         <h3 id="t_roadmap_title">Roadmap</h3>
@@ -469,13 +462,13 @@
     <div class="card">
       <div class="badge pill-warn"><i></i><span id="t_safe_title">Safety & Ethics</span></div>
       <p id="t_safe_desc" style="margin-top:10px">
-        Tools here are built for <b>authorized defensive security</b> and educational purposes only.
+        Tools here are built for authorized defensive security and educational purposes only.
         Do not use them against systems you don’t own or don’t have explicit permission to test.
       </p>
     </div>
   </section>
 
-  <section id="contribute" class="rtl">
+  <section id="contribute">
     <div class="section-title">
       <div>
         <h3 id="t_contrib_title">Contributing</h3>
@@ -504,7 +497,7 @@
     </div>
   </section>
 
-  <footer class="rtl">
+  <footer>
     <div class="hr"></div>
     <div class="footer-grid">
       <div>
@@ -523,11 +516,10 @@
 <script>
   const $ = (id)=>document.getElementById(id);
   const html = document.documentElement;
-  const rtlWrap = $("rtlWrap");
 
   const dict = {
     en: {
-      langBtn: "AR",
+      ui_lang_btn: "AR",
       brand: "DefendIQOps",
       tag: "Build. Verify. Defend.",
       kicker: "Practical, defensive-first cybersecurity utilities",
@@ -537,7 +529,7 @@
       nav_tools: "Tools",
       nav_roadmap: "Roadmap",
       nav_contribute: "Contribute",
-      btn_github: "⭐ GitHub",
+      btn_github: "GitHub",
       btn_start: "🚀 Explore Tools",
       btn_docs: "📄 View Repo",
       btn_issues: "🧩 Suggest a Tool",
@@ -593,14 +585,16 @@
       p2_desc: "Small PRs are best: one improvement, one fix, or one feature with docs.",
       p3_badge: "Standard",
       p3_title: "Keep it predictable",
-      p3_desc: "Readable output, safe defaults, and clear limitations — no “magic”, no hidden behavior.",
+      p3_desc: "Readable output, safe defaults, and clear limitations — no hidden behavior.",
       footer_line: "Build. Verify. Defend.",
       footer_small: "Defensive use only.",
-      backtop: "Back to top ↑"
+      backtop: "Back to top ↑",
+      page_title: "DefendIQOps — Practical Defensive Cybersecurity Tools",
+      page_desc: "DefendIQOps is a hub of practical, lightweight defensive cybersecurity tools and documentation for blue teams and security engineers."
     },
 
     ar: {
-      langBtn: "EN",
+      ui_lang_btn: "EN",
       brand: "DefendIQOps",
       tag: "ابنِ. تحقّق. دافع.",
       kicker: "أدوات سيبرانية دفاعية عملية — بدون تعقيد",
@@ -610,13 +604,13 @@
       nav_tools: "الأدوات",
       nav_roadmap: "الخطة",
       nav_contribute: "المساهمة",
-      btn_github: "⭐ GitHub",
+      btn_github: "GitHub",
       btn_start: "🚀 تصفّح الأدوات",
       btn_docs: "📄 فتح الريبو",
       btn_issues: "🧩 اقترح أداة",
       disclaimer_short: "للاستخدام الدفاعي المصرّح فقط • بدون إرشادات هجومية",
       stat1_title: "دفاعي أولًا",
-      stat1_desc: "مصممة للـ Blue Team: تدقيقات، فحوصات تقوية، ومساعدة في الـ Triage.",
+      stat1_desc: "مصممة للـ Blue Team: تدقيقات، فحوصات تقوية، ومساعدة في الفرز (Triage).",
       stat2_title: "سريعة وخفيفة",
       stat2_desc: "سكريبتات صغيرة ومخرجات واضحة واعتماديات قليلة — بتشتغل بأي مكان.",
       stat3_title: "توثيق مفيد فعلًا",
@@ -624,7 +618,7 @@
       tools_title: "تصنيفات الأدوات",
       tools_sub: "نبدأ صغير… وننشر بسرعة… ونخليها مفيدة.",
       tools_badge: "إطلاق أولي: شغالين عليها الآن",
-      c1_badge: "فحوصات وتحقق",
+      c1_badge: "فحوصات وتحقّق",
       c1_title: "فحوصات آمنة للأخطاء الشائعة",
       c1_desc: "أدوات سريعة تلتقط سوء الإعدادات، الهيدرز الضعيفة، التعرض غير المقصود، والإعدادات الخطرة.",
       c1_li1: "فحص هيدرز HTTP ووضع TLS",
@@ -632,18 +626,18 @@
       c1_li3: "تدقيقات محلية خفيفة (بدون استغلال)",
       c2_badge: "محللات",
       c2_title: "حوّل البيانات لإشارات واضحة",
-      c2_desc: "محللات للّوغز، الروابط، الهاشات، والآرتيفاكتس — مناسبة للـ Triage والوضوح.",
+      c2_desc: "محللات للّوغز، الروابط، الهاشات، والآرتيفاكتس — مناسبة للفرز والوضوح.",
       c2_li1: "مساعدات Parsing وملخصات سريعة",
       c2_li2: "تنظيف وتوحيد IOCs وإزالة التكرار",
       c2_li3: "فحص آرتيفاكتس (قراءة فقط وآمن)",
       c3_badge: "مساندة Blue Team",
       c3_title: "أدوات SOC/DFIR بتوفر وقتك",
-      c3_desc: "سكريبتات وقوالب لخط سير الحوادث: جمع، فرز، تقارير، وهَيجين.",
-      c3_li1: "Checklists للـ Triage + قوالب تقارير",
+      c3_desc: "سكريبتات وقوالب لمسار الحوادث: جمع، فرز، تقارير، ونظافة أمنية.",
+      c3_li1: "قوائم فرز + قوالب تقارير",
       c3_li2: "مساعدات جمع أدلة بشكل آمن",
-      c3_li3: "Workflows جاهزة لإعادة الاستخدام",
+      c3_li3: "مسارات عمل قابلة لإعادة الاستخدام",
       roadmap_title: "الخطة (Roadmap)",
-      roadmap_sub: "خطوات واضحة — بدون فلسفة.",
+      roadmap_sub: "خطوات واضحة — بدون حكي زايد.",
       r1_badge: "مرحلة 1",
       r1_title: "إطلاق أول أداة",
       r1_desc: "ريبو واحد مركز + README نظيف + أمثلة + Disclaimer واضح.",
@@ -657,7 +651,7 @@
       safe_desc:
         "الأدوات هنا مخصصة للاستخدام الدفاعي المصرّح وللتعليم فقط. ممنوع استخدامها ضد أنظمة لا تملكها أو ما عندك إذن صريح لفحصها.",
       contrib_title: "المساهمة",
-      contrib_sub: "أهلاً بأي PR — بس نخلي الشغل نظيف ودفاعي.",
+      contrib_sub: "أهلًا بأي PR — بس نخلي الشغل نظيف ودفاعي.",
       p1_badge: "اقتراح",
       p1_title: "اقترح فكرة أداة",
       p1_desc: "افتح Issue واكتب المشكلة، المدخلات/المخرجات المتوقعة، وبيانات آمنة إن لزم.",
@@ -669,28 +663,32 @@
       p3_desc: "مخرجات مقروءة + إعدادات آمنة + حدود واضحة — بدون سلوك مخفي.",
       footer_line: "ابنِ. تحقّق. دافع.",
       footer_small: "للاستخدام الدفاعي فقط.",
-      backtop: "رجوع للأعلى ↑"
+      backtop: "رجوع للأعلى ↑",
+      page_title: "DefendIQOps — أدوات دفاعية عملية للأمن السيبراني",
+      page_desc: "DefendIQOps منصة لأدوات الأمن السيبراني الدفاعية الخفيفة مع توثيق واضح لفرق الـ Blue Team."
     }
   };
 
-  function setLang(lang){
-    html.setAttribute("data-lang", lang);
-    // Toggle RTL wrapper class
+  function setMeta(title, desc){
+    document.title = title;
+    const meta = document.querySelector('meta[name="description"]');
+    if(meta) meta.setAttribute("content", desc);
+  }
+
+  function applyLang(lang){
+    const t = dict[lang];
+    html.dataset.lang = lang;
+
+    // Proper RTL/Lang handling
     if(lang === "ar"){
-      document.body.classList.add("rtl");
-      // ensure all rtl sections behave
-      document.querySelectorAll(".rtl").forEach(el => el.classList.add("rtl"));
+      html.setAttribute("dir","rtl");
+      html.setAttribute("lang","ar");
     }else{
-      document.body.classList.remove("rtl");
-      document.querySelectorAll(".rtl").forEach(el => el.classList.remove("rtl"));
-      // keep base class on wrapper
-      $("rtlWrap").classList.add("rtl");
-      // we'll re-add rtl class only to elements that need it by toggling via html attr in CSS
-      // (CSS uses [data-lang="ar"] .rtl)
+      html.setAttribute("dir","ltr");
+      html.setAttribute("lang","en");
     }
 
-    const t = dict[lang];
-    $("t_lang").textContent = t.langBtn;
+    $("t_lang").textContent = t.ui_lang_btn;
     $("t_brand").textContent = t.brand;
     $("t_tag").textContent = t.tag;
     $("t_kicker").textContent = t.kicker;
@@ -701,7 +699,7 @@
     $("t_nav_roadmap").textContent = t.nav_roadmap;
     $("t_nav_contribute").textContent = t.nav_contribute;
 
-    $("t_btn_github").lastChild.textContent = " GitHub"; // keep the star
+    $("t_btn_github").textContent = t.btn_github;
     $("t_btn_start").textContent = t.btn_start;
     $("t_btn_docs").textContent = t.btn_docs;
     $("t_btn_issues").textContent = t.btn_issues;
@@ -756,7 +754,7 @@
     $("t_r3_desc").textContent = t.r3_desc;
 
     $("t_safe_title").textContent = t.safe_title;
-    $("t_safe_desc").innerHTML = t.safe_desc.replace("authorized", "<b>authorized</b>");
+    $("t_safe_desc").textContent = t.safe_desc;
 
     $("t_contrib_title").textContent = t.contrib_title;
     $("t_contrib_sub").textContent = t.contrib_sub;
@@ -774,26 +772,20 @@
     $("t_p3_desc").textContent = t.p3_desc;
 
     $("t_footer_line").textContent = t.footer_line;
-    $("t_footer_small").textContent = t.footer_small;
+    $("t_footer_small").textContent = `© ${new Date().getFullYear()} DefendIQOps. ${t.footer_small}`;
     $("t_backtop").textContent = t.backtop;
 
-    // Update <title> and meta description for accessibility
-    if(lang === "ar"){
-      document.title = "DefendIQOps — أدوات دفاعية عملية للأمن السيبراني";
-    }else{
-      document.title = "DefendIQOps — Practical Defensive Cybersecurity Tools";
-    }
+    setMeta(t.page_title, t.page_desc);
   }
 
   // init
   $("year").textContent = new Date().getFullYear();
   let current = "en";
-  setLang(current);
+  applyLang(current);
 
   $("langBtn").addEventListener("click", ()=>{
     current = (current === "en") ? "ar" : "en";
-    setLang(current);
-    // Smooth scroll to top of current section if needed
+    applyLang(current);
   });
 </script>
 </body>
