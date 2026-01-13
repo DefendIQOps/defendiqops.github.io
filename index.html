@@ -4,13 +4,40 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#061018" />
-  <title>DefendIQOps</title>
+  <title>DefendIQOps — Defensive Security Utilities & Services</title>
   <meta name="description" content="Defensive-first security utilities & services. Validate posture, monitor changes, and ship safer systems — no offensive actions." />
+
+  <!-- Canonical (edit to your final URL if needed) -->
+  <link rel="canonical" href="https://defendiqops.github.io/" />
+
+  <!-- Social preview (OG/Twitter) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="DefendIQOps — Defensive Security Utilities & Services" />
+  <meta property="og:description" content="Validate posture, spot risky configs, and ship safer systems — defensive-first, authorized use only." />
+  <meta property="og:url" content="https://defendiqops.github.io/" />
+  <!-- Use one of your existing images as OG image to avoid adding new assets -->
+  <meta property="og:image" content="https://defendiqops.github.io/assets/img/logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Basic security/privacy headers hints (served headers still matter) -->
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
 
   <link rel="preload" as="image" href="assets/img/logo.png">
   <link rel="preload" as="image" href="assets/img/logo2.png">
 
   <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- Optional: small structured data (safe + improves SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"DefendIQOps",
+    "url":"https://defendiqops.github.io/",
+    "email":"mailto:S3killer7772@gmail.com",
+    "slogan":"Security. Verified. Defensive."
+  }
+  </script>
 </head>
 
 <body>
@@ -18,18 +45,19 @@
 
   <header class="topbar">
     <div class="container topbar__inner">
-      <a class="brand" href="#">
+      <a class="brand" href="#" aria-label="DefendIQOps Home">
         <span class="brand__dot" aria-hidden="true"></span>
         <span class="brand__name">DefendIQOps</span>
       </a>
 
-      <button class="navbtn" id="navBtn" aria-label="Open menu" aria-expanded="false">
+      <button class="navbtn" id="navBtn" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
         <span></span><span></span><span></span>
       </button>
 
-      <nav class="nav" id="nav">
+      <nav class="nav" id="nav" aria-label="Primary navigation">
         <a href="#services">Services</a>
         <a href="#toolkit">Toolkit</a>
+        <a href="#proof">Proof</a>
         <a href="#why">Why Us</a>
         <a class="btn btn--sm" href="#contact">Get a Quote</a>
       </nav>
@@ -38,13 +66,14 @@
 
   <main id="main">
     <!-- HERO -->
-    <section class="hero">
+    <section class="hero" aria-label="DefendIQOps introduction">
       <div class="container hero__grid">
         <div class="hero__copy">
           <p class="pill">Defensive-first • Authorized use only</p>
           <h1>Protect your site & workflow — fast, clean, defensive.</h1>
+
           <p class="lead">
-            DefendIQOps helps you validate security posture, spot risky configurations, and ship safer systems
+            Validate security posture, spot risky configurations, and ship safer systems
             with clear reports and practical fixes.
           </p>
 
@@ -53,14 +82,21 @@
             <a class="btn btn--ghost" href="#toolkit">View Tools</a>
           </div>
 
+          <!-- Stronger trust signals: still short, more “business” -->
           <div class="trust-row" aria-label="Trust signals">
             <div class="trust">Fast setup</div>
             <div class="trust">Clear reports</div>
             <div class="trust">Defensive only</div>
+            <div class="trust">No data retention*</div>
           </div>
+
+          <!-- Microcopy: adds confidence without legal drama -->
+          <p class="micro" style="opacity:.75; margin-top:.75rem;">
+            *By default we don’t store your content. Share only what you’re authorized to share.
+          </p>
         </div>
 
-        <!-- BRAND PREVIEW / SLIDER -->
+        <!-- BRAND PREVIEW / SLIDER (untouched image sizing & IDs) -->
         <div class="hero__media">
           <div class="card glass">
             <div class="card__head">
@@ -90,6 +126,11 @@
               <span class="dot dot--on" id="dot1"></span>
               <span class="dot" id="dot2"></span>
             </div>
+
+            <!-- Tiny “what this is” line (builds trust) -->
+            <p class="micro" style="opacity:.75; margin-top:.75rem;">
+              Preview only. Tools & services are defensive and require authorization.
+            </p>
           </div>
         </div>
       </div>
@@ -102,25 +143,40 @@
       <div class="container">
         <div class="section__head">
           <h2>Services that build trust</h2>
-          <p>People choose sites that look reliable, clear, and “safe”. So we focus on clarity, proof, and smooth UX.</p>
+          <p>Clear posture checks, prioritized risks, and practical remediation — designed to feel premium and calm.</p>
         </div>
 
         <div class="grid3">
           <article class="tile">
             <h3>Defensive Security Review</h3>
             <p>Configuration checks, best-practice hardening, and risk prioritization — no offensive actions.</p>
+            <ul class="mini" style="margin: .75rem 0 0; opacity:.85;">
+              <li>Headers / TLS / Cookies</li>
+              <li>Misconfig & exposure checks</li>
+              <li>Actionable “next steps”</li>
+            </ul>
             <a class="tile__link" href="#contact">Ask for a review →</a>
           </article>
 
           <article class="tile">
             <h3>Readable Reports</h3>
-            <p>Non-technical summary + technical appendix, so decision-makers understand what matters.</p>
-            <a class="tile__link" href="#contact">Get a sample →</a>
+            <p>Executive summary + technical appendix, so decision-makers understand what matters.</p>
+            <ul class="mini" style="margin: .75rem 0 0; opacity:.85;">
+              <li>Risk ranking</li>
+              <li>Quick wins</li>
+              <li>Evidence & references</li>
+            </ul>
+            <a class="tile__link" href="#proof">See report style →</a>
           </article>
 
           <article class="tile">
             <h3>Practical Remediation</h3>
             <p>Step-by-step fixes and validation, aimed at shipping improvements quickly with minimal disruption.</p>
+            <ul class="mini" style="margin: .75rem 0 0; opacity:.85;">
+              <li>Fix plan</li>
+              <li>Verification steps</li>
+              <li>Change tracking</li>
+            </ul>
             <a class="tile__link" href="#contact">Plan the fixes →</a>
           </article>
         </div>
@@ -132,27 +188,66 @@
       <div class="container">
         <div class="section__head">
           <h2>Toolkit (clean & commercial)</h2>
-          <p>Short list, clear value, and quick CTA — this converts better than long walls of text.</p>
+          <p>Short list, clear value, quick CTA — built for defensive validation and monitoring.</p>
         </div>
 
         <div class="grid3">
           <article class="tool">
             <h3>Phishing Message Check</h3>
             <p>Spot suspicious patterns, domain tricks, and risky links with easy-to-read scoring.</p>
+            <p class="micro" style="opacity:.75;">Output: risk score + reasons + safe guidance.</p>
             <a class="btn btn--sm btn--ghost" href="#contact">Request demo</a>
           </article>
 
           <article class="tool">
             <h3>Header & TLS Validation</h3>
             <p>Quick checks for security headers, HTTPS posture, and common misconfigurations.</p>
+            <p class="micro" style="opacity:.75;">Output: findings + severity + fixes.</p>
             <a class="btn btn--sm btn--ghost" href="#contact">Request demo</a>
           </article>
 
           <article class="tool">
             <h3>Asset Integrity</h3>
             <p>Track changes in files and configs, and detect unexpected modifications early.</p>
+            <p class="micro" style="opacity:.75;">Output: diff summary + alerts-ready notes.</p>
             <a class="btn btn--sm btn--ghost" href="#contact">Request demo</a>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROOF -->
+    <section class="section" id="proof">
+      <div class="container">
+        <div class="section__head">
+          <h2>Proof (what you actually get)</h2>
+          <p>Clients trust proof. Here’s the typical deliverable format — short, readable, and actionable.</p>
+        </div>
+
+        <div class="grid2">
+          <div class="panel">
+            <h3>Deliverables</h3>
+            <ul class="mini" style="margin:.75rem 0 0; opacity:.9;">
+              <li>Executive Summary (risk + quick wins)</li>
+              <li>Findings Table (severity + evidence)</li>
+              <li>Fix Steps (copy/paste ready)</li>
+              <li>Validation Checklist (verify the change)</li>
+            </ul>
+          </div>
+
+          <div class="panel">
+            <h3>Example: report snippet</h3>
+            <pre class="snippet" style="margin-top:.75rem; overflow:auto;">
+Finding: Missing Content-Security-Policy (CSP)
+Severity: High
+Impact: XSS risk, data exfiltration
+Fix: Add CSP header (baseline policy), then iterate.
+Verify: Confirm header present + no console CSP errors.</pre>
+            <p class="micro" style="opacity:.75; margin-top:.5rem;">
+              Want a real sample? Ask and we’ll share a sanitized example.
+            </p>
+            <a class="btn btn--sm" href="#contact">Request sample</a>
+          </div>
         </div>
       </div>
     </section>
@@ -162,13 +257,13 @@
       <div class="container">
         <div class="section__head">
           <h2>Why this style works</h2>
-          <p>Commercial sites win when value is clear in 5 seconds, buttons are obvious, and layout feels premium.</p>
+          <p>Commercial sites win when value is clear in 5 seconds, buttons are obvious, and the layout feels premium.</p>
         </div>
 
         <div class="grid2">
           <div class="panel">
             <h3>Decision is emotional first</h3>
-            <p>Users judge trust from spacing, contrast, clarity, and “calm UI”. Then they read details.</p>
+            <p>Users judge trust from spacing, contrast, clarity, and a calm UI — then they read details.</p>
           </div>
           <div class="panel">
             <h3>One path to action</h3>
@@ -179,9 +274,38 @@
         <div class="ctaBand glass">
           <div>
             <h3>Want it even smoother?</h3>
-            <p>Add pricing + FAQ + a simple front-end contact form next.</p>
+            <p>Add a simple contact form + FAQ next (still lightweight, still fast).</p>
           </div>
           <a class="btn" href="#contact">Contact Now</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section__head">
+          <h2>FAQ</h2>
+          <p>Quick answers to reduce friction and increase replies.</p>
+        </div>
+
+        <div class="grid2">
+          <div class="panel">
+            <h3>Do you perform offensive testing?</h3>
+            <p>No. Defensive validation only (config, posture, misconfig checks). Authorization required.</p>
+          </div>
+          <div class="panel">
+            <h3>What do you need from me?</h3>
+            <p>Usually: domain/app scope + what you want validated. Share only what you’re authorized to share.</p>
+          </div>
+          <div class="panel">
+            <h3>How fast is the turnaround?</h3>
+            <p>Depends on scope. Small checks can be quick; deeper reviews take longer. We’ll confirm after scope.</p>
+          </div>
+          <div class="panel">
+            <h3>Can you provide a sample report?</h3>
+            <p>Yes — sanitized example format is available on request.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -191,10 +315,10 @@
       <div class="container">
         <div class="section__head">
           <h2>Contact</h2>
-          <p>Keep it simple: one CTA, one path. This reduces drop-off.</p>
+          <p>Keep it simple: one CTA, one path.</p>
         </div>
 
-        <div class="contact glass">
+        <div class="contact glass" aria-label="Contact details">
           <div class="contact__row">
             <div class="label">Email</div>
             <div class="value"><a href="mailto:S3killer7772@gmail.com">S3killer7772@gmail.com</a></div>
@@ -206,6 +330,12 @@
           <div class="contact__row">
             <div class="label">Tagline</div>
             <div class="value">Security. Verified. Defensive.</div>
+          </div>
+
+          <!-- Small “what to send” guidance -->
+          <div class="contact__row">
+            <div class="label">Include</div>
+            <div class="value">Scope (site/app) • Goals • Deadline • Contact handle</div>
           </div>
         </div>
       </div>
